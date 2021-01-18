@@ -1,0 +1,134 @@
+<template>
+  <div>
+      <div class="jump-look">跳过，先看看></div>
+      <div class="logo">
+        <van-image :src="require('@/assets/image/btn_add_photo.png')"></van-image>
+      </div>
+      <div class="login-inp">
+        <div class="item-inp">
+          <van-image :src="require('@/assets/image/login_ic_number.png')"></van-image>
+          <input type="text" placeholder="请输入账号" >
+        </div>
+        <div class="item-inp">
+          <van-image :src="require('@/assets/image/login_ic_password.png')"></van-image>
+          <input type="text" placeholder="请输入密码" >
+        </div>
+      </div>
+      <div class="login-operate">
+        <div class="item-operate">
+          <van-image :src="require('@/assets/image/login_ic_agree_n.png')"></van-image>记住密码
+        </div>
+        <div class="item-operate">忘记密码？</div>
+      </div>
+      <div class="login-tips">
+        <van-image :src="require('@/assets/image/login_ic_agree_n.png')"></van-image>登录及表示同意
+        <a href="">《用户协议》</a>
+      </div>
+      <div class="btns">
+        <div class="btn">登录</div>
+        <div class="btn">注册</div>
+      </div>
+  </div>
+</template>
+<script>
+import { mapState } from "vuex";
+export default {
+  name: "login",
+  data() {
+    return {
+      
+    };
+  },
+  computed: {
+  },
+  created() {
+  },
+  methods: {
+    
+  },
+  mounted() {
+  }
+};
+</script>
+<style lang="scss" scoped>
+.btns{
+  margin: 0 30px;
+  .btn{
+    background: linear-gradient(to right, #53C8E1 ,  #F02DFF );;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 16px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    &:nth-child(2){
+      border: 1px solid #D627FA;
+      background: #fff;
+      color: #D627FA;
+    }
+  }
+
+}
+  .jump-look{
+    margin: 10px 16px 20px;
+    text-align: right;
+    font-size: 14px;
+  }
+  .logo{
+    .van-image{
+    margin: 0 auto;
+      width: 90px;
+      height: 90px;
+      display: block;
+    }
+  }
+  .login-inp{
+     margin: 30px 30px 7px;
+    .item-inp{
+      height: 64px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #E1E4E8;
+      font-size: 14px;
+      .van-image{
+        width: 24px;
+        height: 24px;margin-right: 8px;
+      }
+    }
+  }
+  .login-operate{
+    margin: 0 30px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #999;
+    align-items: center;
+    line-height: 20px;
+    .item-operate{
+      display: flex;
+      align-items: center;
+    }
+    .van-image{
+      width: 20px;
+      height: 20px;
+    }
+  }
+  .login-tips{
+    margin-top: 40px;
+    margin-bottom: 8px;
+    font-size: 12px;
+    color:  #999;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    a{color: #D627FA;}
+    .van-image{
+      margin-left: 3px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+</style>

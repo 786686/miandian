@@ -1,0 +1,133 @@
+body {
+    -webkit-font-smoothing: antialiased;
+}
+
+.margin {
+    margin: 0 auto;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+.ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+    background-color: #F5F5F5;
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+}
+
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: #555;
+}
+.slide-right-enter-active,
+.slide-right-leave-active,
+.slide-left-enter-active,
+.slide-left-leave-active {
+  will-change: transform;
+  transition: all 0.3s;
+  position: absolute;
+  width: 100%;
+  left: 0;
+}
+.slide-right-enter {
+  transform: translateX(-100%);
+}
+.slide-right-leave-active {
+  transform: translateX(100%);
+}
+.slide-left-enter {
+  transform: translateX(100%);
+}
+.slide-left-leave-active {
+  transform: translateX(-100%);
+}
+
+// 长按钮
+.btns{
+  margin: 0 30px;
+  .btn{
+    background: linear-gradient(to right, #F02DFF,  #53C8E1 );;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 16px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    &:nth-child(2){
+      border: 1px solid #D627FA;
+      background: #fff;
+      color: #D627FA;
+    }
+  }
+
+}
+
+// 弹窗的按钮
+.bottom-pop-btn{
+  border-top: 1px solid #DDDDDD;;
+  line-height: 50px;
+  color: #D627FA;  
+  font-size: 15px;
+  text-align: center;
+  font-weight: 600;
+}
+
+// 中间弹窗
+.center-pop{
+  width: 280px;
+  padding-top: 20px;
+  font-size: 16px;
+  font-weight: 600;
+  .van-image{
+    width: 70px;
+    height: 70px;
+    margin: 0 auto;
+    display: block;
+  }
+  .pop-msg{
+    margin: 18px 44px;
+    text-align: center;
+  }
+
+  .pop-dec{
+    color: #999; text-align: center;
+  }
+  .pop{
+    display: flex; justify-content: center; align-items: center;
+    color: #999; text-align: center;
+    .van-image{
+      margin-left: 10px; width: 20px; height: 20px;
+    }
+  }
+}
