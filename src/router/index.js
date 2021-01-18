@@ -71,8 +71,19 @@ const router = new Router({
       name: "detail",
       component: () =>
         import(/* webpackChunkName: "record" */ "@/views/Detail/Detail.vue")
-    }
-
+    },
+    {
+      path: "/Wallet",
+      name: "wallet",
+      component: () =>
+        import(/* webpackChunkName: "record" */ "@/views/Wallet/Wallet.vue")
+    },
+    {
+      path: "/SetSuccess",
+      name: "SetSuccess",
+      component: () =>
+        import(/* webpackChunkName: "record" */ "@/views/SetSuccess/SetSuccess.vue")
+    },
     // {
     //   path: "/my",
     //   name: "my",
