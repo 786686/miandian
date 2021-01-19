@@ -69,13 +69,16 @@ export default {
 
 <style lang="scss" scoped>
 .tab-bar {
+  background: #ffffff;
+  box-shadow: 0px -2px 4px 0px rgba(238, 238, 238, 0.5);
+
   display: flex;
   justify-content: space-around;
   align-items: center;
-  height: 100px;
+  height: 50px;
   background-color: #fff;
   border-top: 1px solid #f2f2f2;
-  padding: 0 110px;
+  // padding: 0 110px;
   z-index: 10000;
   position: fixed;
   bottom: 0;
@@ -87,19 +90,26 @@ export default {
     font-size: 22px;
     text-align: center;
     flex-direction: column;
-    justify-content: space-evenly;
+    // justify-content: space-evenly;
+    justify-content: center;
+    align-items: center;
     height: 100%;
-    padding: 5px 0;
+    // padding: 5px 0;
+
+    font-size: 11px;
+    color: #999999;
+    line-height: 1;
     // .iconfont {
     //   font-size: 44px;
     // }
     .van-image {
-      width: 48px;
-      height: 48px;
+      width: 24px;
+      height: 24px;
+      margin-bottom: 5px;
     }
   }
   .bar-item.active {
-    color: #f88706;
+    color: #d627fa;
   }
 }
 </style>

@@ -5,6 +5,20 @@
       <div class="item-title">热门城市（点击选择城市）：</div>
       <div class="city-list">
         <div class="item">广州</div>
+        <div class="item">广州</div>
+        <div class="item">广州</div>
+        <div class="item">广州</div>
+        <div class="item">广州</div>
+        <div class="item">广州</div>
+        <div class="item">广州</div>
+        <div class="item">广州</div>
+        <div class="item">广州</div>
+        <div class="item">广州</div>
+        <div class="item">广州</div>
+        <div class="item">广州</div>
+        <div class="item">广州</div>
+        <div class="item">广州</div>
+        <div class="item">广州</div>
         <div class="item">深圳</div>
       </div>
     </div>
@@ -27,25 +41,36 @@ export default {
 </script>
 <style lang="scss" scoped>
 .change-city {
-  margin: 20px;
+  margin: 20px 16px;
   .current-city {
-    font-size: 14px;
-    color: #333;
+    margin-bottom: 20px;
+    font-size: 15px;
+    color: #333333;
+    line-height: 21px;
+    padding-bottom: 20px;
     border-bottom: 1px solid #eee;
   }
   .item-title {
-    font-size: 14px;
-    color: #333;
+    font-size: 15px;
+    color: #333333;
+    line-height: 21px;
+    margin-bottom: 10px;
   }
   .city-list {
     display: flex;
     flex-wrap: wrap;
     .item {
-      margin-right: 5px;
-      border: 1px solid #eee;
-      color: #eee;
+      padding: 0 12px;
+      line-height: 30px;
+      height: 32px;
+      border-radius: 2px;
+      border: 1px solid #e5e5e5;
+      margin-right: 6px;
+      margin-bottom: 10px;
+      color: #b3b5ba;
+      font-size: 14px;
       &.avtice {
-        color: #333;
+        color: #d627fa;
       }
     }
   }
