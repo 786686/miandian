@@ -1,7 +1,7 @@
 <template>
   <van-swipe :autoplay="3000" indicator-color="white">
     <van-swipe-item v-for="(item, index) in bannerList" :key="index">
-      <img :src="item.mainPic" alt="" class="banner-img" />
+      <img :src="item.url" alt="" class="banner-img" />
     </van-swipe-item>
   </van-swipe>
 </template>
@@ -19,7 +19,7 @@ export default {
 <style lang="scss" scoped>
 .banner-img {
   width: 100%;
-  height: 280px;
+  // height: 280px;
   display: block;
 }
 </style>

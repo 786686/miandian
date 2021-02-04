@@ -2,30 +2,37 @@
   <div>
       <div class="item-title">忘记密码，请联系客服找回</div>
       <div class="item-num-list">
-        <div class="item">客服1：020-3242455<div class="btn">一键拨号</div></div>
-        <div class="item">客服1：020-3242455<div class="btn">一键拨号</div></div>
-        <div class="item">客服1：020-3242455<div class="btn">一键拨号</div></div>
+        <div class="item" v-for="(item,index) in list" :key="index">客服{{(index+1)}}：{{item.cPhone}}<div class="btn" @click="call(item.cPhone)">一键拨号</div></div>
       </div>
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import Goods from "@/api/goods";
+
 export default {
-  name: "login",
+  name: "forgetpwd",
   data() {
     return {
-      
+      list:[],
     };
   },
-  computed: {
-  },
   created() {
+    this.getList()
   },
   methods: {
+    call(phone){
+      window.location.href = "tel://" + phone;
+    },
+    async getList(){
+      let {code,data} = await Goods.getPhoneList();
+      if(code == 200){
+        this.list = data;
+        console.log(this.list)
+      }
+    }
     
   },
-  mounted() {
-  }
+  mounted() {}
 };
 </script>
 <style lang="scss" scoped>

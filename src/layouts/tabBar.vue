@@ -34,12 +34,12 @@ export default {
         {
           label: "钱包",
           icon: "wallet",
-          name: "record"
+          name: "wallet"
         },
         {
           label: "电话",
           icon: "phone",
-          name: "my"
+          name: "phone"
         },
         {
           label: "我的",

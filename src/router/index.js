@@ -15,6 +15,12 @@ const router = new Router({
       component: Home
     },
     {
+      path: "/phone",
+      name: "phone",
+      component: () =>
+        import(/* webpackChunkName: "record" */ "@/views/Phone/Phone.vue")
+    },
+    {
       path: "/selectlanguage",
       name: "selectlanguage",
       component: () =>
@@ -82,13 +88,113 @@ const router = new Router({
       path: "/SetSuccess",
       name: "SetSuccess",
       component: () =>
-        import(/* webpackChunkName: "record" */ "@/views/SetSuccess/SetSuccess.vue")
+        import(
+          /* webpackChunkName: "record" */ "@/views/SetSuccess/SetSuccess.vue"
+        )
     },
-    // {
-    //   path: "/my",
-    //   name: "my",
-    //   component: () => import(/* webpackChunkName: "my" */ "@/views/My/My.vue")
-    // },
+    {
+      path: "/reward",
+      name: "reward",
+      component: () =>
+        import(/* webpackChunkName: "record" */ "@/views/Reward/Reward.vue")
+    },
+    {
+      path: "/InputPwd",
+      name: "InputPwd",
+      component: () =>
+        import(/* webpackChunkName: "record" */ "@/views/InputPwd/InputPwd.vue")
+    },
+    {
+      path: "/BalanceDetails",
+      name: "BalanceDetails",
+      component: () =>
+        import(/* webpackChunkName: "record" */ "@/views/BalanceDetails/BalanceDetails.vue")
+    },
+    {
+      path: "/Withdrawal",
+      name: "Withdrawal",
+      component: () =>
+        import(/* webpackChunkName: "record" */ "@/views/Withdrawal/Withdrawal.vue")
+    },    
+    {
+      path: "/Recharge",
+      name: "Recharge",
+      component: () =>
+        import(/* webpackChunkName: "my" */ "@/views/Recharge/Recharge.vue")
+    },
+    {
+      path: "/WithdrawalPwd",
+      name: "WithdrawalPwd",
+      component: () =>
+        import(/* webpackChunkName: "my" */ "@/views/WithdrawalPwd/WithdrawalPwd.vue")
+    },
+    {
+      path: "/WithdrawalSuccess",
+      name: "WithdrawalSuccess",
+      component: () =>
+        import(/* webpackChunkName: "my" */ "@/views/WithdrawalSuccess/WithdrawalSuccess.vue")
+    },
+    {
+      path: "/my",
+      name: "my",
+      component: () => import(/* webpackChunkName: "my" */ "@/views/My/My.vue")
+    },
+    {
+      path: "/settings",
+      name: "settings",
+      component: () => import(/* webpackChunkName: "my" */ "@/views/Settings/Settings.vue")
+    },
+    {
+      path: "/UpdatePwd",
+      name: "UpdatePwd",
+      component: () => import(/* webpackChunkName: "my" */ "@/views/UpdatePwd/UpdatePwd.vue")
+    },
+    {
+      path: "/UpdateNewPwd",
+      name: "UpdateNewPwd",
+      component: () => import(/* webpackChunkName: "my" */ "@/views/UpdateNewPwd/UpdateNewPwd.vue")
+    },
+    {
+      path: "/UpdatePayPwd",
+      name: "UpdatePayPwd",
+      component: () => import(/* webpackChunkName: "my" */ "@/views/UpdatePayPwd/UpdatePayPwd.vue")
+    },
+    {
+      path: "/UpdateNewPayPwd",
+      name: "UpdateNewPayPwd",
+      component: () => import(/* webpackChunkName: "my" */ "@/views/UpdateNewPayPwd/UpdateNewPayPwd.vue")
+    },
+    {
+      path: "/About",
+      name: "About",
+      component: () => import(/* webpackChunkName: "my" */ "@/views/About/About.vue")
+    },
+    {
+      path: "/Order",
+      name: "Order",
+      component: () => import(/* webpackChunkName: "my" */ "@/views/Order/Order.vue")
+    },
+    {
+      path: "/Comment",
+      name: "Comment",
+      component: () => import(/* webpackChunkName: "my" */ "@/views/Comment/Comment.vue")
+    },
+    {
+      path: "/PersonMsg",
+      name: "PersonMsg",
+      component: () => import(/* webpackChunkName: "my" */ "@/views/PersonMsg/PersonMsg.vue")
+    },
+    {
+      path: "/EditMsg",
+      name: "EditMsg",
+      component: () => import(/* webpackChunkName: "my" */ "@/views/EditMsg/EditMsg.vue")
+    },
+    {
+      path: "/TimeManage",
+      name: "TimeManage",
+      component: () => import(/* webpackChunkName: "my" */ "@/views/TimeManage/TimeManage.vue")
+    },
+    
     // {
     //   path: "/RepairSearch",
     //   name: "RepairSearch",
@@ -136,12 +242,6 @@ const router = new Router({
     //     import(
     //       /* webpackChunkName: "my" */ "@/views/ChangePhone/ChangePhone.vue"
     //     )
-    // },
-    // {
-    //   path: "/Recharge",
-    //   name: "Recharge",
-    //   component: () =>
-    //     import(/* webpackChunkName: "my" */ "@/views/Recharge/Recharge.vue")
     // },
     // {
     //   path: "/PayMent",

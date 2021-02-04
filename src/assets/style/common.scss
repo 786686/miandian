@@ -101,6 +101,21 @@ body {
   font-size: 15px;
   text-align: center;
   font-weight: 600;
+  display: flex;
+  justify-content: center;
+  .item-bottom-pop-btn{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #999;
+    &:last-child{
+      color: #D627FA;
+    }
+    &:nth-child(2){
+      border-left: 1px solid #DDDDDD;
+    }
+  }
 }
 
 // 中间弹窗
@@ -108,7 +123,6 @@ body {
   width: 280px;
   padding-top: 20px;
   font-size: 16px;
-  font-weight: 600;
   .van-image{
     width: 70px;
     height: 70px;
@@ -116,18 +130,68 @@ body {
     display: block;
   }
   .pop-msg{
-    margin: 18px 44px;
+    margin: 18px 12px;
     text-align: center;
+    font-weight: 600;
+    line-height: 24px;
   }
 
   .pop-dec{
     color: #999; text-align: center;
+    margin: 5px 0 12px;
+    font-size: 14px;
+    color: #666666;
+    line-height: 20px;
   }
-  .pop{
+  .pop-phone{
     display: flex; justify-content: center; align-items: center;
-    color: #999; text-align: center;
+    text-align: center;
+    font-size: 14px;
+    color: #666666;
+    line-height: 20px;
+    margin-bottom: 15px;
     .van-image{
-      margin-left: 10px; width: 20px; height: 20px;
+      margin-left: 10px; margin-right: 0; width: 28px; height: 28px;
     }
   }
 }
+
+
+.pop-title{
+  font-size: 16px;
+  font-weight: bold;
+  color: #333333;
+  line-height: 24px;
+  text-align: center;
+  }
+  .pop-price{
+    margin-top: 15px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #DDDDDD;
+    text-align: center;
+    .item-unit{
+      font-size: 16px;
+      color: #999999;
+      line-height: 22px;
+    }
+      font-size: 28px;
+      color: #D627FA;
+      line-height: 40px;
+  }
+  .pop-operate{
+    margin: 10px 16px 16px;  
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: #999999;
+    line-height: 20px;
+
+    .item-operate{
+      display: flex;
+      align-items: center;
+      .van-image{
+        width: 28px; height: 28px; margin-right:4px;
+      }
+    }
+  }

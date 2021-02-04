@@ -1,15 +1,16 @@
 <template>
   <div>
     <div class="detail-top">
-      <van-image :src="require('@/assets/image/pic.jpg')"></van-image>
+      <swiper :bannerList="bannerList"></swiper>
+      
+      <!-- <van-image :src="require('@/assets/image/pic.jpg')"></van-image> -->
     </div>
     <div class="detail-msg">
       <div class="item">
         <div class="item-l">TA的标签：</div>
         <div class="item-r">
           <div class="item-tags">
-            <div class="item-tag">风雨无阻</div>
-            <div class="item-tag">风雨无阻</div>
+            <div class="item-tag" v-for="(item,index) in detailItem.labelList" :key="index">{{item.name}}</div>
           </div>
         </div>
       </div>
@@ -17,18 +18,15 @@
         <div class="item-l">TA的评分：</div>
         <div class="item-r">
           <div class="item-sorce">
-            <van-image :src="require('@/assets/image/ic_star.png')"></van-image>
-            <van-image :src="require('@/assets/image/ic_star.png')"></van-image>
-            <van-image :src="require('@/assets/image/ic_star.png')"></van-image>
-            <van-image :src="require('@/assets/image/ic_star.png')"></van-image>
-            4分
+            <van-image :src="require('@/assets/image/ic_star.png')" v-for="(item,index) in parseInt(detailItem.teaTeacher.evaluate)" :key="index"></van-image>
+            {{detailItem.teaTeacher.evaluate}}分
           </div>
         </div>
       </div>
       <div class="item">
         <div class="item-l">TA的介绍：</div>
         <div class="item-r">
-          详细介绍详细介绍详细介绍
+          {{detailItem.teaTeacher.remark}}
         </div>
       </div>
     </div>
@@ -41,111 +39,234 @@
       title-inactive-color="#999"
       @change="onChangeTab"
     >
-      <van-tab title="基本信息">
+      <van-tab title="基本信息" name="基本信息">
         <template>
           <div class="base-msg">
-            <div class="item">身高：160cm</div>
-            <div class="item">体重：50kg</div>
-            <div class="item">常驻城市：广州</div>
+            <div class="item">身高：{{detailItem.teaTeacher.height}}</div>
+            <div class="item">体重：{{detailItem.teaTeacher.weight}}</div>
+            <div class="item">常驻城市：{{detailItem.teaTeacher.city}}</div>
             <div class="item item-phone">
-              电话：134****1234
+              电话：{{detailItem.teaTeacher.telephone}}
               <van-image
                 :src="require('@/assets/image/btn_call.png')"
               ></van-image>
             </div>
             <div class="item">服务套餐</div>
             <div class="item-service-list">
-              <div class="item-service">
+              <div class="item-service" v-for="(item,index) in detailItem.setmealList" :key="index">
                 <div class="item-service-l">
                   <div class="item-service-top">
                     <van-radio
-                      name="1"
-                      v-model="radio"
+                      name="item.id"
+                      v-model="item.checked"
                       checked-color="#D627FA"
                     ></van-radio
-                    >套餐二/2小时
+                    >{{item.name}}
                   </div>
-                  <div class="item-service-msg">套餐说明</div>
+                  <div class="item-service-msg">{{item.remark}}</div>
                 </div>
                 <van-image
                   class="icon-price"
                   :src="require('@/assets/image/ic_jin.png')"
                 ></van-image>
-                <div class="item-price">$ 100.00</div>
+                <div class="item-price">$ {{item.money}}</div>
               </div>
             </div>
-            <div class="btns">
-              <div class="btn">立即打赏</div>
-            </div>
+            <!-- <div class="btns">
+              <div class="btn" @click="reward">立即打赏</div>
+            </div> -->
           </div>
         </template>
       </van-tab>
       <van-tab title="评论信息">
         <template>
           <div class="comment-msg">
-            <div class="item">
+            <div class="item" v-for="(item,index) in list" :key="index">
               <van-image
                 class="item-cover"
-                :src="require('@/assets/image/pic.jpg')"
+                :src="item.userUrl"
               ></van-image>
               <div class="item-r">
                 <div class="item-r-top">
                   <div class="item-top-l">
-                    <div class="item-name">姓名</div>
-                    <div class="item-time">2020-12-12</div>
+                    <div class="item-name">{{item.userName}}</div>
+                    <div class="item-time">{{item.createTime}}</div>
                   </div>
                   <div class="item-r-sorce">
                     <van-image
-                      :src="require('@/assets/image/ic_star.png')"
-                    ></van-image>
-                    <van-image
-                      :src="require('@/assets/image/ic_star.png')"
-                    ></van-image>
-                    <van-image
-                      :src="require('@/assets/image/ic_star.png')"
-                    ></van-image>
-                    <van-image
-                      :src="require('@/assets/image/ic_star.png')"
-                    ></van-image>
-                    <van-image
+                      v-for="(childItem,childIndex) in parseInt(item.evaluate)"
+                      :key="childIndex"
                       :src="require('@/assets/image/ic_star.png')"
                     ></van-image>
                   </div>
                 </div>
                 <div class="item-r-con">
-                  <div class="item-r-con-in">这是评论</div>
+                  <div class="item-r-con-in">{{item.remark}}</div>
                   <div class="item-look">查看全部</div>
                 </div>
               </div>
             </div>
             <div class="item-all">查看全部评论</div>
-            <div class="btns">
-              <div class="btn">立即打赏</div>
-            </div>
+           
           </div>
         </template>
       </van-tab>
     </van-tabs>
+     <div class="btns">
+        <div class="btn" @click="reward">立即打赏</div>
+      </div>
   </div>
 </template>
 <script>
 import { mapState } from "vuex";
+import Goods from "@/api/goods";
+import swiper from "@/components/swiper";
 export default {
   name: "detail",
+  components: {
+    swiper,
+  },
   data() {
     return {
       radio: "1",
-      tabsActive: ["基本信息"]
+      tabsActive: "基本信息",
+      list: [],
+      id: "",
+      teaID: "",
+      bannerList: []
     };
   },
   computed: {
     ...mapState(["userInfo"])
   },
-  created() {},
-  methods: {
-    onChangeTab() {}
+  created() {
+    this.id = this.$route.query.id;
+    this.teaID = this.$route.query.teaID;
+    this.getDetail();
+    this.getEvaluateList();
   },
-  mounted() {}
+  methods: {
+    onChangeTab() {},
+    reward(){
+      this.$router.push("/reward");
+    },
+    async getDetail() {
+      const params = {
+        teaID: this.id
+      };
+      const { data, code } = await Goods.getDetail(params);
+      // let code = 200
+      if (code === 200) {
+        this.detailItem = data;
+        
+        let data1= {
+          "imgList": [
+            {
+              "id": 22,
+              "userId": 8,
+              "url": "https://tea-teach.oss-cn-guangzhou.aliyuncs.com/images/2021/01/11/16103578273599233.jpg",
+              "type": 1,
+              "state": "0",
+              "createTime": "2021-01-13 09:02:59"
+            }
+          ],
+          "labelList": [
+            {
+              "id": 11,
+              "name": "美丽",
+              "number": 1,
+              "userId": 8,
+              "createTime": "2021-01-13 09:02:59",
+              "updateTime": "2021-01-13 09:02:59",
+              "state": "0",
+              "type": "1"
+            }
+          ],
+          "setmealList": [
+            {
+              "id": 13,
+              "number": 1,
+              "name": "套餐1",
+              "time": "1",
+              "remark": "这是套餐一这是套餐一这是套餐一这是套餐一这是套餐一这是套餐一这是套餐一这是套餐一这是套餐一这是套餐一这是套餐一这是套餐一这是套餐一这是套餐一这是套餐一这是套餐一这是套餐一这是套餐一这是套餐一这是套餐一",
+              "mark": 1,
+              "userId": 8,
+              "money": 100,
+              "state": "0"
+            }
+          ],
+          "evaluateList": [
+            {
+              "id": 5,
+              "userId": 7,
+              "teaId": 8,
+              "remark": "12312321",
+              "createTime": "2021-01-14 15:32:25",
+              "state": "0",
+              "evaluate": "4"
+            },
+            {
+              "id": 4,
+              "userId": 7,
+              "teaId": 8,
+              "remark": "12312321",
+              "createTime": "2021-01-14 15:24:34",
+              "state": "0",
+              "evaluate": "4"
+            }
+          ],
+          "teaTeacher": {
+            "id": 8,
+            "name": "茶艺师7",
+            "imgUrl": "\r\nhttps://tea-teach.oss-cn-guangzhou.aliyuncs.com/images/2021/01/11/16103578273599233.jpg",
+            "realName": "真实名称",
+            "idcard": "44233334434343",
+            "idcardUrlFirst": "https://tea-teach.oss-cn-guangzhou.aliyuncs.com/upload/product/images/2021/01/12/1edb261f-e396-426a-92eb-e8cd2915b465.jpg",
+            "idcardUrlSecond": "https://tea-teach.oss-cn-guangzhou.aliyuncs.com/upload/product/images/2021/01/12/1edb261f-e396-426a-92eb-e8cd2915b465.jpg",
+            "password": "SM2+KTfdONh5OH4MWdrBug==",
+            "payPassword": "nhmbZhJTZbppeKJYrI28Ng==",
+            "telephone": "13003",
+            "sex": "2",
+            "city": "城市",
+            "province": "省份",
+            "orderNum": "7",
+            "orderNumMonth": "7",
+            "month": "1",
+            "inMoney": 0,
+            "outMoney": 0,
+            "totalMoney": 100,
+            "createTime": "2021-01-13 09:02:59",
+            "updateTime": "2021-01-13 09:02:59",
+            "orderTime": null,
+            "loginTime": null,
+            "state": "0",
+            "statue": "0",
+            "workState": "0",
+            "evaluate": "4.0",
+            "evaluateTotal": null,
+            "height": "167cm",
+            "weight": "43kg",
+            "remark": "这是个人说明",
+            "goods": "0"
+          }
+        }
+        this.detailItem = data;
+        this.bannerList = this.detailItem.imgList;
+        console.log(this.bannerList)
+      }
+    },
+    async getEvaluateList() {
+      const params = {
+        teaID: this.teaID
+      };
+      const { data, code } = await Goods.getEvaluateList(params);
+      if (code === 200) {
+        this.list = data;
+      }
+    },
+  },
+  mounted() {
+  }
 };
 </script>
 <style lang="scss" scoped>

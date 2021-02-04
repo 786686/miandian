@@ -10,14 +10,18 @@ const Axios = axios.create({
   baseURL: process.env.VUE_APP_URL,
   timeout: 30000,
   withCredentials: true,
-  headers: { "Content-Type": "application/x-www-form-urlencoded;charset=utf-8" }
+  // headers: { "Content-Type": "application/x-www-form-urlencoded;charset=utf-8" },
+  // headers: { "Content-Type": "application/json" },
+  headers: { "Content-Type": "application/json;charset=utf-8" }
+  
 });
 
 // 添加请求拦截器
 Axios.interceptors.request.use(
   config => {
-    if (localStorage.accessToken) {
-      config.headers.accessToken = localStorage.accessToken;
+    if (localStorage.token) {
+      // config.headers.token = localStorage.token;
+      config.headers.Authorization = "Bearer " + localStorage.token;
     }
     return config;
   },
@@ -32,7 +36,7 @@ Axios.interceptors.response.use(
   function(response) {
     // console.log(response);
     // 对响应数据做点什么
-    const { code, msg } = response.data;
+    const { code, message } = response.data;
     if (
       code !== 200 &&
       code !== 0 &&
@@ -42,7 +46,7 @@ Axios.interceptors.response.use(
       code !== 202 &&
       code !== 401
     ) {
-      Toast.fail(msg);
+      Toast.fail(message);
     }
 
     // 登录失效
@@ -71,7 +75,8 @@ export default {
     });
   },
   post(url, param = null, headers = {}) {
-    return Axios.post(url, qs.stringify(param), {
+    return Axios.post(url, param, {
+      // return Axios.post(url, qs.stringify(param), {
       headers
     });
   },
@@ -82,12 +87,9 @@ export default {
   },
   file(url, param = null, headers = {}) {
     return Axios.post(url, param, {
-      headers: Object.assign(
-        {
-          "Content-Type": "multipart/form-data"
-        },
-        headers
-      )
+      headers: {
+        "Content-Type": "multipart/form-data"
+      },
     });
   },
   delete(url, param = null, headers = {}) {

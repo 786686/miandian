@@ -1,42 +1,47 @@
 <template>
   <div>
-      <div class="jump-look">跳过，先看看></div>
+      <div class="jump-look" @click="jump">跳过，先看看></div>
       <div class="logo">
         <van-image :src="require('@/assets/image/btn_add_photo.png')"></van-image>
       </div>
       <div class="login-inp">
         <div class="item-inp">
           <van-image :src="require('@/assets/image/login_ic_number.png')"></van-image>
-          <input type="text" placeholder="请输入账号" >
+          <van-field placeholder="请输入账号" v-model="telPhone"></van-field>
         </div>
         <div class="item-inp">
           <van-image :src="require('@/assets/image/login_ic_password.png')"></van-image>
-          <input type="text" placeholder="请输入密码" >
+          <van-field placeholder="请输入密码" type="password" v-model="password"></van-field>
         </div>
       </div>
       <div class="login-operate">
         <div class="item-operate">
-          <van-image :src="require('@/assets/image/login_ic_agree_n.png')"></van-image>记住密码
+          <van-checkbox v-model="rememChecked" checked-color="#D627FA" shape="square" label-color="#999">记住密码</van-checkbox>
         </div>
-        <div class="item-operate">忘记密码？</div>
+        <div class="item-operate" @click="forget">忘记密码？</div>
       </div>
       <div class="login-tips">
-        <van-image :src="require('@/assets/image/login_ic_agree_n.png')"></van-image>登录及表示同意
-        <a href="">《用户协议》</a>
+        <van-checkbox v-model="loginChecked" checked-color="#D627FA" shape="square" label-color="#999">登录及表示同意<a href="javascript: void(0);" @click.stop="protocolClick">《用户协议》</a></van-checkbox>
       </div>
       <div class="btns">
-        <div class="btn">登录</div>
-        <div class="btn">注册</div>
+        <div class="btn" @click="submit">登录</div>
+        <div class="btn" @click="register">注册</div>
       </div>
   </div>
 </template>
 <script>
 import { mapState } from "vuex";
+import User from "@/api/user";
+import { Toast } from "vant";
+
 export default {
   name: "login",
   data() {
     return {
-      
+      rememChecked: false,
+      loginChecked: false,
+      telPhone:'',
+      password:'',
     };
   },
   computed: {
@@ -44,7 +49,43 @@ export default {
   created() {
   },
   methods: {
-    
+    // 跳过看看
+    jump(){
+      this.$router.push("/")
+    },
+    // 跳过看看
+    forget(){
+      this.$router.push("/ForgetPwd")
+    },
+    // 登录
+    async submit(){
+      if(!this.loginChecked){
+        Toast("请先勾选登录及同意")
+        return;
+      }
+      if(this.rememChecked){
+        // 记住密码操作
+      }
+      const params = {
+        telPhone: this.telPhone,
+        password: this.password
+      };
+      const { data, code } = await User.login(params);
+      if (code === 200) {
+        localStorage.setItem("token", data.token);
+        this.$store.commit(`SET_USER_INFO`, data.user);
+        Toast("登录成功！")
+        this.$router.push("/")
+      }
+    },
+    // 注册
+    register(){
+      this.$router.push("/RegisterPhone")
+    },
+    // 协议跳转
+    protocolClick(){
+      window.location.href = "http://www.baidu.com"
+    },
   },
   mounted() {
   }
@@ -131,4 +172,16 @@ export default {
       height: 20px;
     }
   }
+  // 复选框
+  /deep/.van-checkbox__icon{
+    font-size: 14px;
+  }
+  /deep/.van-checkbox__label{
+    font-size: inherit;
+    color: inherit;
+  }
+  /deep/.van-cell.van-field{
+    padding: 0;
+  }
+  // ::v-deep 
 </style>

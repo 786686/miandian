@@ -21,6 +21,7 @@ export default new Vuex.Store({
     },
     SET_USER_INFO: (state, userInfo) => {
       state.userInfo = userInfo;
+      console.log(userInfo)
     },
     SET_BANNER_LIST: (state, list) => {
       state.bannerList = list;
@@ -34,7 +35,7 @@ export default new Vuex.Store({
   },
   actions: {
     // 跳转微信
-    GET_WX_REDIRECT: async () => {
+    GET_WX_REDIRECT: async (code) => {
       if (code === 200) {
         window.location.href = data.url;
         localStorage.setItem("isLogin", true);

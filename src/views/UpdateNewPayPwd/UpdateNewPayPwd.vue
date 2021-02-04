@@ -13,7 +13,7 @@
     </div>
 
     <div class="btns">
-      <div class="btn">修改密码</div>
+      <div class="btn">完成</div>
     </div>
     <div class="set-tips">
       说明：支付密码用于支付及提现，非常重要，请务必记住，如您忘记了支付密码，请联系客服找回。

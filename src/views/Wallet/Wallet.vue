@@ -129,8 +129,8 @@
       <div class="item-price">
         <div class="item-num"><span class="item-unit">$ </span>500.00</div>
         <div class="item-btns">
-          <div class="item-btn">充值</div>
-          <div class="item-btn">提现</div>
+          <div class="item-btn" @click="recharge">充值</div>
+          <div class="item-btn" @click="withdrawal">提现</div>
         </div>
       </div>
       <div class="wallet-tips">
@@ -171,7 +171,12 @@ export default {
   created() {
   },
   methods: {
-    
+    recharge(){
+      this.$router.push("/recharge");      
+    },
+    withdrawal(){
+      this.$router.push("/withdrawal");      
+    },
   },
   mounted() {
   }

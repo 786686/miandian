@@ -1,57 +1,45 @@
 <template>
   <div>
     <div class="index-nav">
-      <div class="item">
+      <div class="item" @click="search">
         广州<van-image
           :src="require('@/assets/image/ic_xiala.png')"
         ></van-image>
       </div>
-      <div class="item active">好评</div>
-      <div class="item">上新</div>
-      <div class="item">好物</div>
+      <div class="item" :class="type==2?'active':''" @click="navClick(2)">好评</div>
+      <div class="item" :class="type==1?'active':''" @click="navClick(1)">上新</div>
+      <div class="item" :class="type==3?'active':''" @click="navClick(3)">好物</div>
     </div>
     <div class="index-list">
-      <div class="item">
+      <div class="item" @click="detailClick(item.setmealList[0].id,item.teaTeacher.id)" v-for="(item,index) in list" :key="index">
         <div class="item-l">
           <div class="item-cover">
             <van-image
-              :src="require('@/assets/image/pic.jpg')"
+              :src="item.imgList && item.imgList.length>0 &&  item.imgList[0].url"
             ></van-image>
           </div>
           <div class="item-l-bottom">
             <van-image :src="require('@/assets/image/pic_number.png')"></van-image
-            ><div class="item-num">5</div>
+            ><div class="item-num">{{item.imgList.length}}</div>
           </div>
         </div>
         <div class="item-r">
           <div class="item-r-top">
-            <div class="item-name">姓名</div>
+            <div class="item-name">{{item.setmealList && item.setmealList.length> 0 && item.setmealList[0].name}}</div>
             <div class="item-score">
               <van-image
-                :src="require('@/assets/image/ic_star.png')"
-              ></van-image
-              ><van-image
-                :src="require('@/assets/image/ic_star.png')"
-              ></van-image
-              ><van-image
-                :src="require('@/assets/image/ic_star.png')"
-              ></van-image
-              ><van-image
-                :src="require('@/assets/image/ic_star.png')"
-              ></van-image
-              ><van-image
-                :src="require('@/assets/image/ic_star.png')"
-              ></van-image>
-              4分
+                v-for="(childItem,childIndex) in parseInt(item.teaTeacher.evaluate)" :key="'childIndex'+childIndex"
+                :src="require('@/assets/image/ic_star.png')"></van-image>
+              {{item.teaTeacher.evaluate}}分
             </div>
           </div>
           <div class="item-tags">
-            <div class="item-tag">风雨五组</div>
-            <div class="item-tag">风雨五组</div>
-            <div class="item-tag">风雨五组</div>
+            <div class="item-tag"
+                v-for="(childItem,childIndex) in item.labelList" :key="'childIndex'+childIndex"
+            >{{childItem.name}}</div>
           </div>
-          <div class="item-price">$ 69</div>
-          <div class="item-intro">简介</div>
+          <div class="item-price">$ {{item.setmealList && item.setmealList.length> 0 && item.setmealList[0].money}}</div>
+          <div class="item-intro">简介：{{item.setmealList && item.setmealList.length> 0 && item.setmealList[0].remark}}</div>
         </div>
       </div>
     </div>
@@ -59,16 +47,46 @@
 </template>
 <script>
 import { mapState } from "vuex";
+
+import Goods from "@/api/goods";
+
 export default {
   name: "home",
   data() {
-    return {};
+    return {
+      list:[],
+      pageNo: 1,
+      type: 2
+    };
   },
-  computed: {
-    ...mapState(["userInfo"])
+  created() {
+    this.getList();
   },
-  created() {},
-  methods: {},
+  methods: {
+    async getList() {
+      const params = {
+        pageNo: this.pageNo,
+        pageSize: 10,
+        type: this.type
+      };
+      const { data, code } = await Goods.getGoodsList(params);
+      if (code === 200) {
+        this.list = this.list.concat(data.teaTeacherList);
+      }
+    },
+    navClick(type){
+      this.type = type;
+      this.list = [];
+      this.pageNo = 1;
+      this.getList();
+    },
+    search(){
+      this.$router.push("/changecity");      
+    },
+    detailClick(id,teaID){
+      this.$router.push({ path:"/detail", query: { id,teaID } });
+    }
+  },
   mounted() {}
 };
 </script>

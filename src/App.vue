@@ -23,17 +23,17 @@ export default {
   },
   created() {
     // return;
-    if (!localStorage.isLogin) {
-      this.$store.dispatch(`GET_WX_REDIRECT`);
-    }
-    if (location.href.includes("accessToken")) {
-      localStorage.setItem("accessToken", getParams("accessToken"));
-      this.$store.commit("SET_USER_ID", getParams("memberId"));
-      this.$store.dispatch("GET_USER_INFO");
-    }
-    if (localStorage.accessToken && !location.href.includes("accessToken")) {
-      this.$store.dispatch("GET_USER_INFO");
-    }
+    // if (!localStorage.isLogin) {
+    //   this.$store.dispatch(`GET_WX_REDIRECT`);
+    // }
+    // if (location.href.includes("token")) {
+    //   localStorage.setItem("token", getParams("token"));
+    //   this.$store.commit("SET_USER_ID", getParams("memberId"));
+    //   this.$store.dispatch("GET_USER_INFO");
+    // }
+    // if (localStorage.token && !location.href.includes("token")) {
+    //   this.$store.dispatch("GET_USER_INFO");
+    // }
   }
 };
 </script>

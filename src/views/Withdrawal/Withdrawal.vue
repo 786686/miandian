@@ -101,22 +101,22 @@ color: #999999;
 <template>
   <div>
     <div class="withdrawal">
-      <div class="item-title">选择充值银行：</div>
+      <div class="item-title">选择提现银行：</div>
       <div class="item-card-list">
         <div class="item-card active">银行一</div>
         <div class="item-card">银行二</div>
       </div>
-      <div class="item-title">输入充值金额：</div>
+      <div class="item-title">请输入银行卡号：</div>
       <div class="item-inp">
-        <van-field placeholder="点击输入充值金额"></van-field>
+        <van-field placeholder="点击输入银行卡号"></van-field>
       </div>
-      <div class="item-title">输入转账编号后6位：</div>
+      <div class="item-title">请输入银行卡号：</div>
       <div class="item-inp">
-        <van-field placeholder="点击输入转账编号后6位"></van-field>
+        <van-field placeholder="点击输入银行卡号"></van-field>
       </div>
-      <div class="item-price-tips">充值金额不得超过钱包余额</div>
+      <div class="item-price-tips">提现金额不得超过钱包余额</div>
       <div class="btns">
-        <div class="btn" @click="confirmRecharge">确认充值</div>
+        <div class="btn" @click="next">下一步</div>
       </div>
       <div class="item-tips">
         常见问题：<br>
@@ -140,14 +140,6 @@ color: #999999;
         </div>
       </div>
     </div>
-
-    <van-popup v-model="popShow" closeable round>
-        <div class="center-pop">
-          <van-image :src="require('@/assets/image/tan_ic_success.png')"></van-image>
-          <div class="pop-msg">您已提交充值确认成功，客服会尽快跟您确认。确认通过后系统将金额转入您的钱包，请耐心等待</div>
-          <div class="bottom-pop-btn" @click="confirm">确定</div>
-        </div>
-    </van-popup>
   </div>
 </template>
 <script>
@@ -156,18 +148,15 @@ export default {
   name: "Withdrawal",
   data() {
     return {
-popShow:false
+
     };
   },
   computed: {},
   created() {},
   methods: {
-    confirmRecharge(){
-      this.popShow = true
-    },
-    confirm(){
-      this.popShow = false
-    },
+    next(){
+      this.$router.push("/InputPwd");      
+    }
   },
   mounted() {}
 };

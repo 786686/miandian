@@ -1,35 +1,88 @@
+<style scoped lang="scss">
+  .person-top{
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    .item-avatar{
+      .van-image{
+        display: block;
+        width: 100px; height: 100px;
+        overflow: hidden; border-radius: 50%;
+      }
+    }
+    .item-name{
+      
+      margin: 5px 0 7px;
+      font-size: 20px;
+      color: #333333;
+      line-height: 28px;
+    }
+    .item-score{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 13px;
+      color: #333333;
+      line-height: 18px;
+      margin-bottom: 8px;
+      .van-image{
+        &:last-child{
+          margin-right: 8px;
+        }
+        width: 16px; height: 16px; margin-right: 4px;
+      }
+    }
+    .item-phone{
+      align-items: center;
+      display: flex;
+      font-size: 15px;
+      color: #999999;
+      line-height: 21px;
+      .van-image{
+        width: 28px; height: 28px; margin-left: 12px;
+      }
+    }
+  }
+</style>
 <template>
   <div>
-    <div class="uploader">
-      <div class="uploader-in">
-          <van-image :src="require('@/assets/image/login_tx_moren.png')" v-if="!teaTeacher.imgUrl"></van-image>
-          <van-image :src="teaTeacher.imgUrl" v-else></van-image>
-          <van-uploader v-model="avatarList" :after-read="avatarAfterRead" :max-count="1">
-            <van-image class="van-image-add" :src="require('@/assets/image/login_tx_btn_add.png')"></van-image>  
-          </van-uploader>
+    <div class="person-top">
+      <div class="item-avatar">
+        <van-image :src="require('@/assets/image/pic.jpg')"></van-image>
       </div>
+      <div class="item-name">王小丫</div>
+      <div class="item-score">
+        <van-image :src="require('@/assets/image/ic_star.png')"></van-image>
+        <van-image :src="require('@/assets/image/ic_star.png')"></van-image>
+        <van-image :src="require('@/assets/image/ic_star.png')"></van-image>
+        <van-image :src="require('@/assets/image/ic_star.png')"></van-image>
+        4分
+      </div>
+      <div class="item-phone">13445674567<van-image :src="require('@/assets/image/btn_call.png')"></van-image></div>
     </div>
     <div class="person-msg">
-      <div class="item align-center">
-        <div class="item-l">填写昵称：</div>
-        <div class="item-r">
-          <van-field placeholder="请输入昵称" v-model="teaTeacher.realName"></van-field>
-        </div>
+      <div class="item item-title">
+        <div class="item-l">我的图片：</div>
       </div>
       <div class="item">
-        <div class="item-l">图片上传：</div>
         <div class="item-r">
-          <!-- <van-image class="pic-uploader" :src="require('@/assets/image/tan_ic_success.png')"></van-image> -->
-          <van-uploader class="van-uploader-pic" v-model="picsList" :after-read="picAfterRead">
-            <!-- <van-image class="pic-uploader" :src="require('@/assets/image/tan_ic_success.png')"></van-image> -->
+          <van-image class="pic-uploader" :src="require('@/assets/image/pic.jpg')"></van-image>
+          <van-uploader class="van-uploader-pic">
+            <van-image :src="require('@/assets/image/btn_add_photo.png')"></van-image>
           </van-uploader>
         </div>
       </div>
       <div class="item">
-        <div class="item-l">选择标签：</div>
+        <div class="item-l">我的标签：</div>
         <div class="item-r">
           <div class="item-tags">
-            <div class="item-tag" :class="{active: currentLabelArr.includes(index)}" v-for="(item,index) in labelList" :key="index" @click="toggleLabel(index)">{{item.name}}</div>
+            <div class="item-tag active">风雨无阻</div>
+            <div class="item-tag">风雨无阻</div>
+            <div class="item-tag">风雨无阻</div>
+            <div class="item-tag">风雨无阻</div>
+            <div class="item-tag">风雨无阻</div>
+            <div class="item-tag">风雨无阻</div>
           </div>
         </div>
       </div>
@@ -92,7 +145,7 @@
         </div>
       </div>
       <div class="item item-title">
-        <div class="item-l">提供的服务：</div>
+        <div class="item-l">您的服务：</div>
       </div>
       <div class="item">
         <div class="item-r">
@@ -116,127 +169,26 @@
         </div>
       </div>
     </div>
-    <div class="finish-tips">
-      <van-image :src="require('@/assets/image/login_ic_agree_n.png')"></van-image>注册即表示同意《用户协议》
-    </div>
     <div class="btns">
-      <div class="btn">立即注册</div>
+      <div class="btn">确认修改</div>
     </div>
-    <div class="finish-tips">
-      说明：后台审核通过后可登录
-    </div>
-    <van-popup v-model="popShow" closeable>
-        <div class="center-pop">
-          <van-image :src="require('@/assets/image/tan_ic_success.png')"></van-image>
-          <div class="pop-msg">恭喜，您与注册成功，<br>
-            请耐心等待平台审核，<br>
-            平台审核通过后可进行登录
-          </div>
-          <div class="bottom-pop-btn">去登录</div>
-        </div>
-    </van-popup>
   </div>
 </template>
 <script>
 import { mapState } from "vuex";
-import User from "@/api/user";
-
 export default {
   name: "login",
   data() {
     return {
-      currentLabelArr: [],
-      picsList:[],
       popShow: false,
-      imgList:[],
-      avatarList:[],
-      teaTeacher: {
-        city: "",
-        height: "",
-        idcard: "",
-        idcardUrlFirst: "",
-        idcardUrlSecond: "",
-        imgUrl: "",
-        name: "",
-        password: "",
-        province: "",
-        realName: "",
-        remark: "",
-        telephone: "",
-        weight: "",
-        sex:""
-      },
-      labelList: []
     };
   },
   computed: {
   },
   created() {
-    this.getLabelList()
   },
   methods: {
-    toggleLabel(index){
-      if(this.currentLabelArr.includes(index)){
-        this.currentLabelArr.splice(this.currentLabelArr.indexOf(index),1)
-      }else{
-        this.currentLabelArr.push(index)
-      }
-    },
-    async getLabelList(){
-      let params = {}
-      let {code,data} = await User.getLabelList(params);
-      if(code == 200){
-        this.labelList = data;
-      }
-    },
-    async picAfterRead(file ){
-      file.status = 'uploading'
-      file.message = '上传中...'
-      try {
-        // const param = {
-        //   file: file.content //	多个用逗号分隔
-        // }
-        // const {code,data} = await User.upload(param)
-        // if(code == 200){
-        //   this.imgList.push({url: data.url})
-          file.status = 'done'
-          file.message = '上传成功'
-        // } else {
-        //   file.status = 'failed'
-        //   file.message = '上传失败'
-        //   this.picsList.splice(this.avatarList.length - 1, 1)
-        // }
-      } catch (error) {
-        file.status = 'failed'
-        file.message = '上传失败'
-        this.picsList.splice(this.avatarList.length - 1, 1)
-      }
-    },
-    async avatarAfterRead(file ){
-      file.status = 'uploading'
-      file.message = '上传中...'
-      try {
-        const param = {
-          file: file.content //	多个用逗号分隔
-        }
-        
-          this.avatarList.splice(this.avatarList.length - 1, 1)
-        // const {code,data} = await User.upload(param)
-        // if(code == 200){
-        //   this.imgList.push({url: data.url})
-          file.status = 'done'
-          file.message = '上传成功'
-        // } else {
-        //   file.status = 'failed'
-        //   file.message = '上传失败'
-        //   this.avatarList.splice(this.avatarList.length - 1, 1)
-        // }
-      } catch (error) {
-        file.status = 'failed'
-        file.message = '上传失败'
-        this.avatarList.splice(this.avatarList.length - 1, 1)
-      }
-    }
+    
   },
   mounted() {
   }
@@ -251,10 +203,6 @@ export default {
   .uploader-in{
     .van-uploader{
       display: block;
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      width: 24px; height: 24px;
     }
     position: relative;
     width: 100px; height: 100px;
@@ -265,10 +213,9 @@ export default {
       display: block;
     }
     .van-image-add{
-      display: block;
       width: 24px; height: 24px;
-      // position: absolute;
-      // right: 0; bottom: 0;
+      position: absolute;
+      right: 0; bottom: 0;
     }
   }
 }
@@ -296,7 +243,7 @@ export default {
       .item-r{
         flex: 1;
         display: flex;
-        flex-wrap: wrap;
+        
         .van-field{
           border-radius: 2px;
           border: 1px solid #ECECEC;
@@ -307,29 +254,15 @@ export default {
           width: 110px;
           height: 110px;
           margin-right: 10px;
+          border-radius: 4px;
+          overflow: hidden;
         }
         .van-uploader-pic{
-          // width: 110px;
-          // height: 110px;
-            margin-bottom: -10px;
+          width: 110px;
+          height: 110px;
           display: flex;
           .van-image{
-            width: 110px;
-            height: 110px;
             display: block;
-          }
-          /deep/.van-uploader__preview,/deep/.van-uploader__upload{
-            width: 110px;
-            height: 110px;
-            margin-right: 10px;
-            margin-bottom: 10px;
-            .van-uploader__preview-image{
-              width: 100%;
-              height: 100%;
-            }
-          }
-          /deep/.van-uploader__upload{
-            margin-right: 0;
           }
         }
         .item-tags{
@@ -341,7 +274,6 @@ export default {
             border-radius: 2px;
             font-size: 14px;
             color: #B3B5BA;
-            border: 1px solid #B3B5BA;
             line-height: 20px;
             margin-right: 4px;
             margin-bottom: 4px;
@@ -460,14 +392,5 @@ export default {
     .van-image{
       width: 20px; height: 20px;
     }
-  }
-  /deep/.van-uploader__preview{
-    margin: 0;
-    .van-uploader__preview-delete{
-      display: none;
-    }
-  }
-  .uploader .uploader-in .van-image{
-    border-radius: 50%;
   }
 </style>
