@@ -13,7 +13,7 @@
       <div class="item align-center">
         <div class="item-l">填写昵称：</div>
         <div class="item-r">
-          <van-field placeholder="请输入昵称" v-model="teaTeacher.realName"></van-field>
+          <van-field placeholder="请输入昵称" v-model="teaTeacher.name"></van-field>
         </div>
       </div>
       <div class="item">
@@ -39,20 +39,20 @@
       <div class="item item-title align-center">
         <div class="item-l item-gray">您的身高：</div>
         <div class="item-r">
-          <van-field placeholder="请输入身高" slot="cm"></van-field>
+          <van-field placeholder="请输入身高" slot="cm" v-model="teaTeacher.height"></van-field>
         </div>
       </div>
       <div class="item item-title align-center">
         <div class="item-l item-gray">您的体重：</div>
         <div class="item-r">
-          <van-field placeholder="请输入体重" slot="cm"></van-field>
+          <van-field placeholder="请输入体重" slot="kg" v-model="teaTeacher.weight"></van-field>
         </div>
       </div>
       <div class="item align-center">
         <div class="item-l item-gray">您的城市：</div>
         <div class="item-r">
-          <div class="item-address">广东省</div>
-          <div class="item-address">广州市</div>
+          <!-- <div class="item-address">广东省</div> -->
+          <div class="item-address" @click="cityClick">{{teaTeacher.city?teaTeacher.city:'请选择'}}</div>
         </div>
       </div>
       <div class="item item-title">
@@ -61,13 +61,13 @@
       <div class="item item-title align-center">
         <div class="item-l item-gray">真实姓名：</div>
         <div class="item-r">
-          <van-field></van-field>
+          <van-field v-model="teaTeacher.realName"></van-field>
         </div>
       </div>
       <div class="item item-title align-center">
         <div class="item-l item-gray">身份证号：</div>
         <div class="item-r">
-          <van-field></van-field>
+          <van-field v-model="teaTeacher.idcard"></van-field>
         </div>
       </div>
       <div class="item item-title">
@@ -77,13 +77,13 @@
         <div class="item-r">
           <div class="item-uploader-card">
             <div class="item-card">
-              <van-uploader>
+              <van-uploader v-model="frontList" :after-read="frontCardRead" :max-count="1">
                 <van-image :src="require('@/assets/image/shenfen_update_zheng.png')"></van-image>
               </van-uploader>
               身份证正面
             </div>
             <div class="item-card">
-              <van-uploader>
+              <van-uploader v-model="afterList" :after-read="afterCardRead" :max-count="1">
                 <van-image :src="require('@/assets/image/shenfen_update_fan.png')"></van-image>
               </van-uploader>
               身份证反面
@@ -94,33 +94,32 @@
       <div class="item item-title">
         <div class="item-l">提供的服务：</div>
       </div>
-      <div class="item">
+      <div class="item" v-for="(item,index) in mealList" :key="index">
         <div class="item-r">
           <div class="item-service">
             <div class="item-servive-top">
-              <van-radio name="1"></van-radio>
-              套餐一/小时
+              <van-checkbox v-model="item.checked" checked-color="#D627FA">{{item.name}}</van-checkbox>
             </div>
             <div class="item-service-con">
-              套餐说明套餐说明套餐说明套餐说明套餐说明套餐说明套餐说明套餐说明套餐说明套餐说明套餐说明套
+              {{item.remark}}
             </div>
-            <div class="item-price">
+            <div class="item-price" v-if="item.checked">
               <div class="item-price-l">
                 <van-image :src="require('@/assets/image/ic_jin.png')"></van-image>
                 <div class="item-line"></div>
-                <van-field placeholder="点击输入价格($)"></van-field>
+                <van-field placeholder="点击输入价格($)" v-model="item.price"></van-field>
               </div>
-              <div class="item-dec">(参考：$ 50.00)</div>
+              <div class="item-dec">(参考：$ {{item.money}})</div>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="finish-tips">
-      <van-image :src="require('@/assets/image/login_ic_agree_n.png')"></van-image>注册即表示同意《用户协议》
+      <van-checkbox v-model="loginChecked" checked-color="#D627FA" shape="square" label-color="#999">注册即表示同意<a href="javascript: void(0);" @click.stop="protocolClick">《用户协议》</a></van-checkbox>
     </div>
     <div class="btns">
-      <div class="btn">立即注册</div>
+      <div class="btn" @click="register">立即注册</div>
     </div>
     <div class="finish-tips">
       说明：后台审核通过后可登录
@@ -132,19 +131,32 @@
             请耐心等待平台审核，<br>
             平台审核通过后可进行登录
           </div>
-          <div class="bottom-pop-btn">去登录</div>
+          <div class="bottom-pop-btn" @click="login">去登录</div>
         </div>
+    </van-popup>
+    <van-popup v-model="cityPop" position="bottom">
+      <van-picker
+        title=""
+        show-toolbar
+        :columns="cityList"
+        @confirm="onConfirm"
+        @cancel="cityPop = false"
+      />
     </van-popup>
   </div>
 </template>
 <script>
 import { mapState } from "vuex";
 import User from "@/api/user";
+import Goods from "@/api/goods";
 
 export default {
   name: "login",
   data() {
     return {
+      afterList:[],
+      frontList:[],
+      loginChecked: false,
       currentLabelArr: [],
       picsList:[],
       popShow: false,
@@ -166,15 +178,86 @@ export default {
         weight: "",
         sex:""
       },
-      labelList: []
+      labelList: [],//初始化标签
+      mealList: [],
+      cityList: ['广州'],
+      cityPop: false,
+
     };
   },
   computed: {
   },
   created() {
+    this.teaTeacher.password = this.$route.query.password;
+    this.teaTeacher.telephone = this.$route.query.telPhone;
+    this.teaTeacher.sex = this.$route.query.sex;
     this.getLabelList()
+    // this.getCityList()
+    this.getMealList()
+    
   },
   methods: {
+    cityClick(){
+      this.cityPop = true
+    },
+    onConfirm(value){
+      this.teaTeacher.city = value
+      this.cityPop = false
+    },
+    async getCityList(){
+      let params = {
+      }
+      let {code,data} = await Goods.cityList(params);
+      if(code == 200){
+        for(let i in data.addresses){
+          this.cityList.push(data.addresses[i].name)
+        }
+        
+      }
+    },    
+    // 登录
+    async register(){
+      if(!this.loginChecked){
+        Toast("请先勾选注册即同意")
+        return;
+      }
+      if(!this.currentLabelArr.length){
+        Toast("请先选择标签")
+        return;
+      }
+      let labelList = [];
+      for(let i in this.currentLabelArr){
+        labelList.push({name: this.labelList[this.currentLabelArr[i]].name});
+      }
+      let setmealList = [];
+      for(let i in this.mealList){
+        if(this.mealList[i].checked){
+          setmealList.push({
+            money:this.mealList[i].price,//	是	string	套餐价格
+            name:this.mealList[i].name,//	是	string	套餐名称
+            number:this.mealList[i].number,//	是	string	套餐编号（即套餐的id，获取系统的套餐列表有返回）
+            time:this.mealList[i].time,//	是	string	套餐时间（获取系统的套餐列表有返回）
+            remark:this.mealList[i].remark,//	是	string	套餐说明（获取系统的套餐列表有返回）
+          })
+        }
+        
+      }
+      const params = {
+        imgList:this.imgList,
+        labelList:labelList,
+        setmealList:setmealList,
+        teaTeacher:this.teaTeacher
+      };
+      const { data, code } = await User.addWoman(params);
+      if (code === 200) {
+        Toast("注册成功！")
+        this.popShow = true;
+      }
+    },
+    // 登录
+    login(){
+      this.$router.push("/login")
+    },  
     toggleLabel(index){
       if(this.currentLabelArr.includes(index)){
         this.currentLabelArr.splice(this.currentLabelArr.indexOf(index),1)
@@ -189,23 +272,36 @@ export default {
         this.labelList = data;
       }
     },
+    async getMealList(){
+      let params = {}
+      let {code,data} = await User.getMealList(params);
+      if(code == 200){
+        for(let i in data){
+          data[i].checked = false;
+          data[i].price = '';
+        }
+        this.mealList = data;
+      }
+    },
+    
+    // 图片上传
     async picAfterRead(file ){
       file.status = 'uploading'
       file.message = '上传中...'
       try {
-        // const param = {
-        //   file: file.content //	多个用逗号分隔
-        // }
-        // const {code,data} = await User.upload(param)
-        // if(code == 200){
-        //   this.imgList.push({url: data.url})
+        const param = {
+          file: file.content.replace('data:image/jpeg;base64,','') //	多个用逗号分隔
+        }
+        const {code,data} = await User.upload(param)
+        if(code == 200){
+          this.imgList.push({url: data.url})
           file.status = 'done'
           file.message = '上传成功'
-        // } else {
-        //   file.status = 'failed'
-        //   file.message = '上传失败'
-        //   this.picsList.splice(this.avatarList.length - 1, 1)
-        // }
+        } else {
+          file.status = 'failed'
+          file.message = '上传失败'
+          this.picsList.splice(this.avatarList.length - 1, 1)
+        }
       } catch (error) {
         file.status = 'failed'
         file.message = '上传失败'
@@ -217,26 +313,68 @@ export default {
       file.message = '上传中...'
       try {
         const param = {
-          file: file.content //	多个用逗号分隔
+          file: file.content.replace('data:image/jpeg;base64,','') //	多个用逗号分隔
         }
-        
-          this.avatarList.splice(this.avatarList.length - 1, 1)
-        // const {code,data} = await User.upload(param)
-        // if(code == 200){
-        //   this.imgList.push({url: data.url})
+        this.avatarList.splice(this.avatarList.length - 1, 1)
+
+        const {code,data} = await User.upload(param)
+        if(code == 200){
+          this.teaTeacher.imgUrl = data.url;
           file.status = 'done'
           file.message = '上传成功'
-        // } else {
-        //   file.status = 'failed'
-        //   file.message = '上传失败'
-        //   this.avatarList.splice(this.avatarList.length - 1, 1)
-        // }
+        } else {
+          file.status = 'failed'
+          file.message = '上传失败'
+          // this.avatarList.splice(this.avatarList.length - 1, 1)
+        }
       } catch (error) {
         file.status = 'failed'
         file.message = '上传失败'
-        this.avatarList.splice(this.avatarList.length - 1, 1)
+        // this.avatarList.splice(this.avatarList.length - 1, 1)
       }
-    }
+    },
+    async frontCardRead(file ){
+      file.status = 'uploading'
+      file.message = '上传中...'
+      try {
+        const param = {
+          file: file.content.replace('data:image/jpeg;base64,','') //	多个用逗号分隔
+        }
+        const {code,data} = await User.upload(param)
+        if(code == 200){
+          this.teaTeacher.idcardUrlFirst = data.url
+          file.status = 'done'
+          file.message = '上传成功'
+        } else {
+          file.status = 'failed'
+          file.message = '上传失败'
+        }
+      } catch (error) {
+        file.status = 'failed'
+        file.message = '上传失败'
+      }
+    },
+    async afterCardRead(file ){
+      file.status = 'uploading'
+      file.message = '上传中...'
+      try {
+        const param = {
+          file: file.content.replace('data:image/jpeg;base64,','') //	多个用逗号分隔
+        }
+        const {code,data} = await User.upload(param)
+        if(code == 200){
+          this.teaTeacher.idcardUrlSecond = data.url
+          file.status = 'done'
+          file.message = '上传成功'
+        } else {
+          file.status = 'failed'
+          file.message = '上传失败'
+        }
+      } catch (error) {
+        file.status = 'failed'
+        file.message = '上传失败'
+      }
+    },
   },
   mounted() {
   }
@@ -460,6 +598,8 @@ export default {
     .van-image{
       width: 20px; height: 20px;
     }
+    a{color: #D627FA;}
+
   }
   /deep/.van-uploader__preview{
     margin: 0;
@@ -468,6 +608,18 @@ export default {
     }
   }
   .uploader .uploader-in .van-image{
-    border-radius: 50%;
+    border-radius: 50%; overflow: hidden;
+  }
+  
+  // 复选框
+  /deep/.van-checkbox__icon{
+    font-size: 14px;
+  }
+  /deep/.van-checkbox__label{
+    font-size: inherit;
+    color: inherit;
+  }
+  /deep/.van-cell.van-field{
+    padding: 0;
   }
 </style>

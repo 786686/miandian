@@ -33,4 +33,8 @@ export default {
   list: data => {
     return http.post("/app/order/list", data);
   },
+  // 余额明细
+  financeDetail: data => {
+    return http.post("/app/finance/detail", data);
+  },
 };

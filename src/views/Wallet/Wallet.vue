@@ -122,7 +122,7 @@
 <template>
   <div>
     <div class="wallet">
-      <div class="item-top">
+      <div class="item-top" @click="detail">
         <van-image :src="require('@/assets/image/btn_set.png')"></van-image>
         余额明细
       </div>
@@ -171,6 +171,9 @@ export default {
   created() {
   },
   methods: {
+    detail(){
+      this.$router.push("/BalanceDetails");      
+    },
     recharge(){
       this.$router.push("/recharge");      
     },

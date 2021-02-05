@@ -35,12 +35,10 @@ export default {
   methods: {
     async getList(){
       let params = {
-        pageNo: this.pageNo,
-        pageNum: 10
       }
       let {code,data} = await Goods.cityList(params);
       if(code == 200){
-        this.list = data;
+        this.list = data.addresses;
       }
     }
     

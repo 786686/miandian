@@ -22,12 +22,16 @@ export default {
   },
   // 上传图片
   upload: data => {
-    return http.file("/aliyun/oss/file/upload", data);
+    return http.post("/aliyun/oss/app/upload", data);
   },
   
   // 系统标签
   getLabelList: data => {
     return http.get("/app/label/list", data);
+  },
+  // 系统套餐
+  getMealList: data => {
+    return http.get("/app/setmeal/list", data);
   },
   
 };

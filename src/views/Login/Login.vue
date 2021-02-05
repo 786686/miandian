@@ -21,7 +21,7 @@
         <div class="item-operate" @click="forget">忘记密码？</div>
       </div>
       <div class="login-tips">
-        <van-checkbox v-model="loginChecked" checked-color="#D627FA" shape="square" label-color="#999">登录及表示同意<a href="javascript: void(0);" @click.stop="protocolClick">《用户协议》</a></van-checkbox>
+        <van-checkbox v-model="loginChecked" checked-color="#D627FA" shape="square" label-color="#999">登录即表示同意<a href="javascript: void(0);" @click.stop="protocolClick">《用户协议》</a></van-checkbox>
       </div>
       <div class="btns">
         <div class="btn" @click="submit">登录</div>
@@ -60,7 +60,7 @@ export default {
     // 登录
     async submit(){
       if(!this.loginChecked){
-        Toast("请先勾选登录及同意")
+        Toast("请先勾选登录即同意")
         return;
       }
       if(this.rememChecked){
@@ -183,5 +183,4 @@ export default {
   /deep/.van-cell.van-field{
     padding: 0;
   }
-  // ::v-deep 
 </style>
