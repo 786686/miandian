@@ -12,11 +12,11 @@ export default {
   login: data => {
     return http.post("/app/user/login", data);
   },
-  // 设置支付密码
+  // 更新支付密码/登录密码
   updatePassWord: data => {
     return http.post("/app/user/updatePassWord", data);
   },
-  // 更新支付密码/登录密码
+  // 设置支付密码
   setPayPassWord: data => {
     return http.post("/app/user/setPayPassWord", data);
   },
@@ -24,7 +24,7 @@ export default {
   upload: data => {
     return http.post("/aliyun/oss/app/upload", data);
   },
-  
+
   // 系统标签
   getLabelList: data => {
     return http.get("/app/label/list", data);
@@ -33,5 +33,8 @@ export default {
   getMealList: data => {
     return http.get("/app/setmeal/list", data);
   },
-  
+  // 充值/提现
+  invest: data => {
+    return http.post("/app/finance/invest", data);
+  }
 };

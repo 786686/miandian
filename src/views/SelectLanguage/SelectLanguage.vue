@@ -4,10 +4,14 @@
       <div class="item-top">请选择您的语言</div>
       <div class="lang-list">
         <div class="item">
-          <van-image :src="require('@/assets/image/ic_radio_s.png')"></van-image>English
+          <van-image :src="require('@/assets/image/ic_radio_s.png')"></van-image
+          >English
         </div>
         <div class="item">
-          <van-image :src="require('@/assets/image/ic_choose_n.png')"></van-image>简体中文
+          <van-image
+            :src="require('@/assets/image/ic_choose_n.png')"
+          ></van-image
+          >简体中文
         </div>
       </div>
       <div class="lang-tips">后续您可在“我的”-“语言设置中进行更改”</div>
@@ -16,24 +20,15 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
 export default {
   name: "language",
   data() {
-    return {
-      
-    };
+    return {};
   },
-  computed: {
-    ...mapState(["userInfo"])
-  },
-  created() {
-  },
-  methods: {
-    
-  },
-  mounted() {
-  }
+  computed: {},
+  created() {},
+  methods: {},
+  mounted() {}
 };
 </script>
 <style lang="scss" scoped>
@@ -41,18 +36,19 @@ export default {
   position: fixed;
   width: 100%;
   height: 100%;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
 
-  .sel-language-pop{
+  .sel-language-pop {
     width: 280px;
     border-radius: 7px;
     overflow: hidden;
-    background-color: #F7F7F7;
-    .item-top{
-      background: #EFEFEF;
+    background-color: #f7f7f7;
+    .item-top {
+      background: #efefef;
       height: 42px;
       display: flex;
       justify-content: center;
@@ -61,25 +57,25 @@ export default {
       font-size: 16px;
       font-weight: 600;
     }
-    .lang-list{
+    .lang-list {
       margin: 20px 0;
-      .item{
+      .item {
         display: flex;
         font-size: 16px;
         align-items: center;
         padding-left: 84px;
         margin-bottom: 32px;
-        &:last-child{
+        &:last-child {
           margin-bottom: 0;
         }
-        .van-image{
+        .van-image {
           width: 20px;
           height: 20px;
           margin-right: 10px;
         }
       }
     }
-    .lang-tips{
+    .lang-tips {
       line-height: 17px;
       font-size: 12px;
       color: #999999;

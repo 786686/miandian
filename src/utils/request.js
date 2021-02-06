@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Toast } from "vant";
 import store from "@/store";
-import qs from "qs";
+// import qs from "qs";
 
 /**
  * 自定义Axios实例
@@ -13,7 +13,6 @@ const Axios = axios.create({
   // headers: { "Content-Type": "application/x-www-form-urlencoded;charset=utf-8" },
   // headers: { "Content-Type": "application/json" },
   headers: { "Content-Type": "application/json;charset=utf-8" }
-  
 });
 
 // 添加请求拦截器
@@ -44,7 +43,8 @@ Axios.interceptors.response.use(
       code !== 100 &&
       code !== 201 &&
       code !== 202 &&
-      code !== 401
+      code !== 401 &&
+      code !== 500
     ) {
       Toast.fail(message);
     }
@@ -85,11 +85,11 @@ export default {
       headers
     });
   },
-  file(url, param = null, headers = {}) {
+  file(url, param = null) {
     return Axios.post(url, param, {
       headers: {
         "Content-Type": "multipart/form-data"
-      },
+      }
     });
   },
   delete(url, param = null, headers = {}) {

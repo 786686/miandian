@@ -1,49 +1,54 @@
 <style scoped lang="scss">
-  .person-top{
-    padding: 20px 0;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    .item-avatar{
-      .van-image{
-        display: block;
-        width: 100px; height: 100px;
-        overflow: hidden; border-radius: 50%;
-      }
-    }
-    .item-name{
-      
-      margin: 5px 0 7px;
-      font-size: 20px;
-      color: #333333;
-      line-height: 28px;
-    }
-    .item-score{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 13px;
-      color: #333333;
-      line-height: 18px;
-      margin-bottom: 8px;
-      .van-image{
-        &:last-child{
-          margin-right: 8px;
-        }
-        width: 16px; height: 16px; margin-right: 4px;
-      }
-    }
-    .item-phone{
-      align-items: center;
-      display: flex;
-      font-size: 15px;
-      color: #999999;
-      line-height: 21px;
-      .van-image{
-        width: 28px; height: 28px; margin-left: 12px;
-      }
+.person-top {
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  .item-avatar {
+    .van-image {
+      display: block;
+      width: 100px;
+      height: 100px;
+      overflow: hidden;
+      border-radius: 50%;
     }
   }
+  .item-name {
+    margin: 5px 0 7px;
+    font-size: 20px;
+    color: #333333;
+    line-height: 28px;
+  }
+  .item-score {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    color: #333333;
+    line-height: 18px;
+    margin-bottom: 8px;
+    .van-image {
+      &:last-child {
+        margin-right: 8px;
+      }
+      width: 16px;
+      height: 16px;
+      margin-right: 4px;
+    }
+  }
+  .item-phone {
+    align-items: center;
+    display: flex;
+    font-size: 15px;
+    color: #999999;
+    line-height: 21px;
+    .van-image {
+      width: 28px;
+      height: 28px;
+      margin-left: 12px;
+    }
+  }
+}
 </style>
 <template>
   <div>
@@ -59,7 +64,11 @@
         <van-image :src="require('@/assets/image/ic_star.png')"></van-image>
         4分
       </div>
-      <div class="item-phone">13445674567<van-image :src="require('@/assets/image/btn_call.png')"></van-image></div>
+      <div class="item-phone">
+        13445674567<van-image
+          :src="require('@/assets/image/btn_call.png')"
+        ></van-image>
+      </div>
     </div>
     <div class="person-msg">
       <div class="item item-title">
@@ -67,9 +76,14 @@
       </div>
       <div class="item">
         <div class="item-r">
-          <van-image class="pic-uploader" :src="require('@/assets/image/pic.jpg')"></van-image>
+          <van-image
+            class="pic-uploader"
+            :src="require('@/assets/image/pic.jpg')"
+          ></van-image>
           <van-uploader class="van-uploader-pic">
-            <van-image :src="require('@/assets/image/btn_add_photo.png')"></van-image>
+            <van-image
+              :src="require('@/assets/image/btn_add_photo.png')"
+            ></van-image>
           </van-uploader>
         </div>
       </div>
@@ -131,13 +145,17 @@
           <div class="item-uploader-card">
             <div class="item-card">
               <van-uploader>
-                <van-image :src="require('@/assets/image/shenfen_update_zheng.png')"></van-image>
+                <van-image
+                  :src="require('@/assets/image/shenfen_update_zheng.png')"
+                ></van-image>
               </van-uploader>
               身份证正面
             </div>
             <div class="item-card">
               <van-uploader>
-                <van-image :src="require('@/assets/image/shenfen_update_fan.png')"></van-image>
+                <van-image
+                  :src="require('@/assets/image/shenfen_update_fan.png')"
+                ></van-image>
               </van-uploader>
               身份证反面
             </div>
@@ -159,7 +177,9 @@
             </div>
             <div class="item-price">
               <div class="item-price-l">
-                <van-image :src="require('@/assets/image/ic_jin.png')"></van-image>
+                <van-image
+                  :src="require('@/assets/image/ic_jin.png')"
+                ></van-image>
                 <div class="item-line"></div>
                 <van-field placeholder="点击输入价格($)"></van-field>
               </div>
@@ -175,222 +195,221 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
 export default {
   name: "login",
   data() {
     return {
-      popShow: false,
+      popShow: false
     };
   },
-  computed: {
-  },
-  created() {
-  },
-  methods: {
-    
-  },
-  mounted() {
-  }
+  computed: {},
+  created() {},
+  methods: {},
+  mounted() {}
 };
 </script>
 <style lang="scss" scoped>
-.uploader{
+.uploader {
   width: 100%;
   display: flex;
   justify-content: center;
   margin: 20px 0;
-  .uploader-in{
-    .van-uploader{
+  .uploader-in {
+    .van-uploader {
       display: block;
     }
     position: relative;
-    width: 100px; height: 100px;
+    width: 100px;
+    height: 100px;
     display: flex;
     justify-content: center;
-    .van-image{
-      width: 100px; height: 100px;
+    .van-image {
+      width: 100px;
+      height: 100px;
       display: block;
     }
-    .van-image-add{
-      width: 24px; height: 24px;
+    .van-image-add {
+      width: 24px;
+      height: 24px;
       position: absolute;
-      right: 0; bottom: 0;
+      right: 0;
+      bottom: 0;
     }
   }
 }
 
-.person-msg{
+.person-msg {
+  margin-bottom: 20px;
+  .item {
+    padding: 0 16px;
+    display: flex;
     margin-bottom: 20px;
-    .item{
-      padding: 0 16px;
+    &.align-center {
+      align-items: center;
+    }
+    &.item-title {
+      margin-bottom: 10px;
+    }
+    .item-l {
+      font-size: 15px;
+      color: #333;
+      line-height: 21px;
+      &.item-gray {
+        color: #999;
+      }
+    }
+    .item-r {
+      flex: 1;
       display: flex;
-      margin-bottom: 20px;
-      &.align-center{
-        align-items: center;        
-      }
-      &.item-title{
-        margin-bottom: 10px;
-      }
-      .item-l{
-        font-size: 15px;
-        color: #333;
+
+      .van-field {
+        border-radius: 2px;
+        border: 1px solid #ececec;
+        padding: 10px;
         line-height: 21px;
-        &.item-gray{
-          color: #999;
+      }
+      .pic-uploader {
+        width: 110px;
+        height: 110px;
+        margin-right: 10px;
+        border-radius: 4px;
+        overflow: hidden;
+      }
+      .van-uploader-pic {
+        width: 110px;
+        height: 110px;
+        display: flex;
+        .van-image {
+          display: block;
         }
       }
-      .item-r{
-        flex: 1;
+      .item-tags {
         display: flex;
-        
-        .van-field{
+        flex-wrap: wrap;
+        .item-tag {
+          padding: 4px 6px;
+          background: #f8f9fb;
           border-radius: 2px;
-          border: 1px solid #ECECEC;
-          padding: 10px;
+          font-size: 14px;
+          color: #b3b5ba;
+          line-height: 20px;
+          margin-right: 4px;
+          margin-bottom: 4px;
+          &.active {
+            color: #d627fa;
+            border: 1px solid #d627fa;
+          }
+        }
+      }
+      .item-address {
+        padding: 10px;
+        font-size: 15px;
+        color: #333333;
+        line-height: 21px;
+        border-radius: 2px;
+        border: 1px solid #ececec;
+        margin-right: 10px;
+        flex: 1;
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+      .item-uploader-card {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        .van-image {
+          width: 165px;
+          height: 113px;
+          margin-bottom: 10px;
+        }
+        .item-card {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          font-size: 15px;
+          color: #999999;
           line-height: 21px;
         }
-        .pic-uploader{
-          width: 110px;
-          height: 110px;
-          margin-right: 10px;
-          border-radius: 4px;
-          overflow: hidden;
-        }
-        .van-uploader-pic{
-          width: 110px;
-          height: 110px;
+      }
+
+      .item-service {
+        border-radius: 2px;
+        border: 1px solid #ececec;
+        margin-bottom: 10px;
+        .item-servive-top {
+          padding: 8px 8px 0;
           display: flex;
-          .van-image{
-            display: block;
-          }
-        }
-        .item-tags{
-          display: flex;
-          flex-wrap: wrap;
-          .item-tag{
-            padding: 4px 6px;
-            background: #F8F9FB;
-            border-radius: 2px;
-            font-size: 14px;
-            color: #B3B5BA;
-            line-height: 20px;
-            margin-right: 4px;
-            margin-bottom: 4px;
-            &.active{
-              color: #D627FA;
-              border: 1px solid #D627FA;
-            }
-          }
-        }
-        .item-address{
-          padding: 10px;
+          align-items: center;
+          margin-bottom: 10px;
           font-size: 15px;
           color: #333333;
           line-height: 21px;
-          border-radius: 2px;
-          border: 1px solid #ECECEC;
-          margin-right: 10px;
-          flex: 1;
-          &:last-child{
-            margin-right: 0;
+          .van-radio {
+            margin-right: 10px;
           }
         }
-        .item-uploader-card{
-          width: 100%;          
+        .item-service-con {
+          padding: 0 8px 8px;
+          font-size: 13px;
+          color: #999999;
+          line-height: 18px;
+        }
+        .item-price {
+          width: 100%;
           display: flex;
+          align-items: center;
           justify-content: space-between;
-          .van-image{
-            width: 165px;
-            height: 113px;
-            margin-bottom: 10px;
+          padding: 8px;
+          height: 40px;
+          background: #f5f5f5;
+          .van-image {
+            width: 24px;
+            height: 24px;
           }
-          .item-card{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 15px;
-            color: #999999;
-            line-height: 21px;
+          .van-field {
+            font-size: 14px;
+            color: #666666;
+            line-height: 20px;
           }
-        }
-
-         .item-service{
-          border-radius: 2px;
-          border: 1px solid #ECECEC;
-          margin-bottom: 10px;
-          .item-servive-top{
-            padding: 8px 8px 0;
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            font-size: 15px;
-            color: #333333;
-            line-height: 21px;
-            .van-radio{
-              margin-right: 10px;
-            }
+          .item-line {
+            margin: 0 3px 0 7px;
+            width: 1px;
+            height: 22px;
+            background: #d627fa;
           }
-          .item-service-con{
-            padding: 0 8px 8px;
+          .item-dec {
             font-size: 13px;
-            color: #999999;
+            color: #c9c9c9;
             line-height: 18px;
           }
-          .item-price{
-            width: 100%;
+          .item-price-l {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 8px;
-            height: 40px;
-            background: #F5F5F5;
-            .van-image{
-              width: 24px;
-              height: 24px;
-            }
-            .van-field{
-              font-size: 14px;
-              color: #666666;
-              line-height: 20px;
-            }
-            .item-line{
-              margin: 0 3px 0 7px;
-              width: 1px;
-              height: 22px;
-              background: #D627FA;
-            }
-            .item-dec{
-              font-size: 13px;
-              color: #C9C9C9;
-              line-height: 18px;
-            }
-            .item-price-l{
-              display: flex;
-              align-items: center;
+            flex: 1;
+            .van-field {
+              padding-left: 0;
               flex: 1;
-              .van-field{
-                padding-left: 0;
-                flex: 1;
-                border: 0;
-                background: #F5F5F5;
-              }
+              border: 0;
+              background: #f5f5f5;
             }
           }
         }
       }
     }
   }
-  .finish-tips{
-    margin: 10px 0;
-    display: flex;
-    justify-content: center;
-    font-size: 12px;
-    color: #999999;
-    line-height: 17px;
-    align-items: center;
-    .van-image{
-      width: 20px; height: 20px;
-    }
+}
+.finish-tips {
+  margin: 10px 0;
+  display: flex;
+  justify-content: center;
+  font-size: 12px;
+  color: #999999;
+  line-height: 17px;
+  align-items: center;
+  .van-image {
+    width: 20px;
+    height: 20px;
   }
+}
 </style>

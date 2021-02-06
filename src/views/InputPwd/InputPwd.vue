@@ -32,7 +32,6 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
 export default {
   name: "wallet",
   data() {
@@ -45,8 +44,8 @@ export default {
   computed: {},
   created() {},
   methods: {
-    finish(){
-      this.$router.push("/WithdrawalSuccess");   
+    finish() {
+      this.$router.push("/WithdrawalSuccess");
     },
     getFocus() {
       this.focus = true;

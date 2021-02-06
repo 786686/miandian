@@ -4,44 +4,42 @@
       <div class="current-city">您当前选择：广州</div>
       <div class="item-title">热门城市（点击选择城市）：</div>
       <div class="city-list">
-        <div class="item"
-        :class="{active:index == current}"
-            v-for="(item,index) in list"
-            :key="index"
-            >{{item}}</div>
+        <div
+          class="item"
+          :class="{ active: index == current }"
+          v-for="(item, index) in list"
+          :key="index"
+        >
+          {{ item.name }}
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
 import Goods from "@/api/goods";
 
 export default {
   name: "changecity",
   data() {
     return {
-      list:[],
+      list: [],
       current: "",
-      pageNo: 1,
+      pageNo: 1
     };
   },
-  computed: {
-    ...mapState(["userInfo"])
-  },
+  computed: {},
   created() {
-    this.getList()
+    this.getList();
   },
   methods: {
-    async getList(){
-      let params = {
-      }
-      let {code,data} = await Goods.cityList(params);
-      if(code == 200){
+    async getList() {
+      let params = {};
+      let { code, data } = await Goods.cityList(params);
+      if (code == 200) {
         this.list = data.addresses;
       }
     }
-    
   },
   mounted() {}
 };

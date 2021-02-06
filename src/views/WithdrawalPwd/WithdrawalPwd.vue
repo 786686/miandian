@@ -13,7 +13,7 @@
     </div>
 
     <div class="btns">
-      <div class="btn">完成</div>
+      <div class="btn" @click="onSubmit">完成</div>
     </div>
 
     <input
@@ -29,7 +29,8 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import User from "@/api/user";
+
 export default {
   name: "wallet",
   data() {
@@ -42,6 +43,22 @@ export default {
   computed: {},
   created() {},
   methods: {
+    async onSubmit() {
+      let param = {
+        bankName: "", //	是	String	银行名称，充值时不能为空
+        bankCode: "", //	是	String	银行卡号，提现时不能为空
+        city: "", //	是	String	城市
+        code: this.code, //	是	String	转账编号后6位
+        number: this.number, //	是	double	金额
+        role: localStorage.type, //	是	String	角色，1男用户，2女用户
+        type: "0", //	是	String	0充值，1提现
+        payPassword: "" //	是	String	支付密码，提现时不能为空
+      };
+      let { code } = await User.invest(param);
+      if (code == 200) {
+        this.popShow = true;
+      }
+    },
     getFocus() {
       this.focus = true;
     },

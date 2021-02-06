@@ -2,33 +2,21 @@
   <div>
     <div class="reward">
       <div class="reward-top">
-        <van-image :src="require('@/assets/image/pic.jpg')"></van-image>
+        <swiper :bannerList="bannerList"></swiper>
       </div>
       <div class="item-title">选择套餐：</div>
-      <div class="meal-list">
-        <div class="item active">
+      <div class="meal-list" v-for="(item, index) in mealList" :key="index">
+        <div class="item" :class="{ active: mealIndex == index }">
           <div class="item-top">
-            <div class="item-l">套餐一：怡宝龙井的</div>
+            <div class="item-l">{{ item.name }}</div>
             <div class="item-r">
               <van-image
                 :src="require('@/assets/image/ic_jin_small.png')"
               ></van-image>
-              <span class="item-unit">500/1小时</span>
+              <span class="item-unit">{{ item.money }}/1小时</span>
             </div>
           </div>
-          <div class="item-con">说明：这是套餐说明</div>
-        </div>
-        <div class="item">
-          <div class="item-top">
-            <div class="item-l">套餐一：怡宝龙井的</div>
-            <div class="item-r">
-              <van-image
-                :src="require('@/assets/image/ic_jin_small.png')"
-              ></van-image>
-              <span class="item-unit">500/1小时</span>
-            </div>
-          </div>
-          <div class="item-con">说明：这是套餐说明</div>
+          <div class="item-con">说明：{{ item.remark }}</div>
         </div>
       </div>
       <div class="item-title">选择时间：</div>
@@ -118,12 +106,12 @@
         <div class="pop-msg">支付成功</div>
         <div class="pop-dec">支付成功，尽快电话联系哦</div>
         <div class="pop-phone">
-          020-12341234
+          {{ phone }}
           <van-image
             :src="require('@/assets/image/tan_ic_success.png')"
           ></van-image>
         </div>
-        <div class="bottom-pop-btn">确认</div>
+        <div class="bottom-pop-btn" @click="confirmSuccess">确认</div>
       </div>
     </van-popup>
 
@@ -137,13 +125,24 @@
       </div>
     </van-popup>
 
+    <van-popup v-model="lessMoney" round closeable>
+      <div class="center-pop">
+        <div class="pop-msg">{{ warnTips }}</div>
+        <div class="bottom-pop-btn">
+          <div class="item-bottom-pop-btn" @click="goRecharge">去充值</div>
+        </div>
+      </div>
+    </van-popup>
+
     <van-popup v-model="inputPwdPop" round closeable>
       <div class="center-pop">
         <div class="pop-title">请输入支付密码</div>
-        <div class="pop-price"><span class="item-unit">$</span> 500.00</div>
+        <div class="pop-price">
+          <span class="item-unit">$</span> {{ totalMoney }}
+        </div>
         <div class="pop-operate">
           <div class="item-operate">支付方式</div>
-          <div class="item-operate">
+          <div class="item-operate" @click="onWallet">
             <van-image :src="require('@/assets/image/ic_card.png')"></van-image
             >我的钱包
           </div>
@@ -174,29 +173,88 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import User from "@/api/user";
+import Order from "@/api/order";
+import Goods from "@/api/goods";
+
+import swiper from "@/components/swiper";
 export default {
   name: "reward",
+  components: {
+    swiper
+  },
   data() {
     return {
-      warnTips: "支付密码错误，请重试", //余额不足，请充值
+      id: "",
+      phone: "",
+      bannerList: [],
+      totalMoney: 0,
+      warnTips: "", //支付密码错误，请重试     /     余额不足，请充值
       pwdVal: "",
       focus: false,
       popSuccess: false,
       popForgetPwd: false,
-      inputPwdPop: false,
-      isAndroid: /android/.test(window.navigator.userAgent.toLocaleLowerCase())
+      inputPwdPop: true,
+      isAndroid: /android/.test(window.navigator.userAgent.toLocaleLowerCase()),
+      mealList: [],
+      mealIndex: 0,
+      lessMoney: false
     };
   },
-  computed: {
-    ...mapState(["userInfo"])
+  computed: {},
+  created() {
+    this.getMealList();
   },
-  created() {},
   methods: {
+    async getDetail() {
+      const params = {
+        teaID: this.$route.query.id
+      };
+      const { data, code } = await Goods.getDetail(params);
+      if (code === 200) {
+        this.bannerList = data.imgList;
+        this.phone = data.teaTeacher.telephone;
+      }
+    },
+    confirmSuccess() {
+      this.$router.push("/order");
+    },
+    onWallet() {
+      this.$router.push("/wallet");
+    },
+    goRecharge() {
+      this.$router.push("/recharge");
+    },
+    async getMealList() {
+      let params = {};
+      let { code, data } = await User.getMealList(params);
+      if (code == 200) {
+        for (let i in data) {
+          data[i].checked = false;
+          data[i].price = "";
+        }
+        this.mealList = data;
+        this.totalMoney = this.mealList && this.mealList[0].money;
+      }
+    },
     // 立即支付
-    rightPay(){
-      this.inputPwdPop = true;
-      this.focus = true;
+    async rightPay() {
+      let param = {
+        order: {
+          city: "广州",
+          money: 1112321,
+          setmealId: 1,
+          setmealSize: 1,
+          teaId: 8
+        },
+        timeList: ["2021-02-16 22:00:00"]
+      };
+      let { code, data } = await Order.addOrder(param);
+      if (code == 200) {
+        this.inputPwdPop = true;
+        this.focus = true;
+        this.id = data;
+      }
     },
     getFocus() {
       this.focus = true;
@@ -222,13 +280,26 @@ export default {
       }
       this.$refs.passwordref.focus();
     },
-    inputVal() {
+    async inputVal() {
       if (this.pwdVal.length > 6) {
         this.pwdVal = this.pwdVal.substr(0, 6);
       }
       setTimeout(() => {
         this.pwdVal = this.pwdVal.replace(".", "");
       }, 0);
+      if (this.pwdVal.length == 6) {
+        let param = {
+          id: this.id,
+          telephone: this.pwdVal
+        };
+        let { code, message } = await Order.pay(param);
+        if (code == 200) {
+          this.popSuccess = true;
+        } else if (code == 500) {
+          this.warnTips = message;
+          this.lessMoney = true;
+        }
+      }
     }
   },
   mounted() {}

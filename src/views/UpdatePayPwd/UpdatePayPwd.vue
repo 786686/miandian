@@ -8,12 +8,12 @@
         v-for="(item, index) in 6"
         :key="index"
       >
-        <div class="item-dot" v-if="pwdVal.length > index"></div>
+        <div class="item-dot" v-if="payPassWord.length > index"></div>
       </div>
     </div>
 
     <div class="btns">
-      <div class="btn">下一步</div>
+      <div class="btn" @click="next">下一步</div>
     </div>
     <div class="set-tips">
       说明：支付密码用于支付及提现，非常重要，请务必记住，如您忘记了支付密码，请联系客服找回。
@@ -21,7 +21,7 @@
 
     <input
       ref="passwordref"
-      v-model="pwdVal"
+      v-model="payPassWord"
       :focus="focus"
       maxlength="6"
       type="number"
@@ -32,12 +32,11 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
 export default {
   name: "wallet",
   data() {
     return {
-      pwdVal: "",
+      payPassWord: "",
       focus: false,
       isAndroid: /android/.test(window.navigator.userAgent.toLocaleLowerCase())
     };
@@ -45,6 +44,12 @@ export default {
   computed: {},
   created() {},
   methods: {
+    next() {
+      let param = {
+        payPassWord: this.payPassWord
+      };
+      this.$router.push({ path: "/updateNewPayPwd", query: param });
+    },
     getFocus() {
       this.focus = true;
     },
@@ -70,11 +75,11 @@ export default {
       this.$refs.passwordref.focus();
     },
     inputVal() {
-      if (this.pwdVal.length > 6) {
-        this.pwdVal = this.pwdVal.substr(0, 6);
+      if (this.payPassWord.length > 6) {
+        this.payPassWord = this.payPassWord.substr(0, 6);
       }
       setTimeout(() => {
-        this.pwdVal = this.pwdVal.replace(".", "");
+        this.payPassWord = this.payPassWord.replace(".", "");
       }, 0);
     }
   },

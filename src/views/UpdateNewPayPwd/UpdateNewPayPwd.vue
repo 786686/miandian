@@ -8,7 +8,7 @@
         v-for="(item, index) in 6"
         :key="index"
       >
-        <div class="item-dot" v-if="pwdVal.length > index"></div>
+        <div class="item-dot" v-if="newPayPassWord.length > index"></div>
       </div>
     </div>
 
@@ -21,7 +21,7 @@
 
     <input
       ref="passwordref"
-      v-model="pwdVal"
+      v-model="newPayPassWord"
       :focus="focus"
       maxlength="6"
       type="number"
@@ -32,19 +32,35 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import User from "@/api/user";
+import { Toast } from "vant";
 export default {
   name: "wallet",
   data() {
     return {
-      pwdVal: "",
+      newPayPassWord: "",
       focus: false,
       isAndroid: /android/.test(window.navigator.userAgent.toLocaleLowerCase())
     };
   },
   computed: {},
-  created() {},
+  created() {
+    this.payPassWord = this.$route.query.payPassWord;
+  },
   methods: {
+    async onSubmit() {
+      let params = {
+        payPassWord: this.payPassWord, //是	string	支付宝密码 （如果是更新支付密码，登录密码passWord和newPassWord要为空）
+        newPayPassWord: this.newPayPassWord, //是	string	新支付宝密码
+        passWord: "", //是	string	登录密码
+        newPassWord: "", //是	string	新登录密码 （如果是更新登录密码，支付密码payPassWord和newPayPassWord要为空）
+        type: 2 //	是	string	用户类型 1为男用户，2为女用户，这个值一定不能传错
+      };
+      let { code } = await User.updatePassWord(params);
+      if (code == 200) {
+        Toast("修改密码成功！");
+      }
+    },
     getFocus() {
       this.focus = true;
     },
@@ -70,11 +86,11 @@ export default {
       this.$refs.passwordref.focus();
     },
     inputVal() {
-      if (this.pwdVal.length > 6) {
-        this.pwdVal = this.pwdVal.substr(0, 6);
+      if (this.newPayPassWord.length > 6) {
+        this.newPayPassWord = this.newPayPassWord.substr(0, 6);
       }
       setTimeout(() => {
-        this.pwdVal = this.pwdVal.replace(".", "");
+        this.newPayPassWord = this.newPayPassWord.replace(".", "");
       }, 0);
     }
   },

@@ -8,17 +8,17 @@
         v-for="(item, index) in 6"
         :key="index"
       >
-        <div class="item-dot" v-if="pwdVal.length > index"></div>
+        <div class="item-dot" v-if="password.length > index"></div>
       </div>
     </div>
 
     <div class="btns">
-      <div class="btn">下一步</div>
+      <div class="btn" @click="next">下一步</div>
     </div>
 
     <input
       ref="passwordref"
-      v-model="pwdVal"
+      v-model="password"
       :focus="focus"
       maxlength="6"
       type="number"
@@ -29,12 +29,11 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
 export default {
-  name: "wallet",
+  name: "UpdatePwd",
   data() {
     return {
-      pwdVal: "",
+      password: "",
       focus: false,
       isAndroid: /android/.test(window.navigator.userAgent.toLocaleLowerCase())
     };
@@ -42,6 +41,12 @@ export default {
   computed: {},
   created() {},
   methods: {
+    next() {
+      let param = {
+        password: this.password
+      };
+      this.$router.push({ path: "/updateNewPwd", query: param });
+    },
     getFocus() {
       this.focus = true;
     },
@@ -67,11 +72,11 @@ export default {
       this.$refs.passwordref.focus();
     },
     inputVal() {
-      if (this.pwdVal.length > 6) {
-        this.pwdVal = this.pwdVal.substr(0, 6);
+      if (this.password.length > 6) {
+        this.password = this.password.substr(0, 6);
       }
       setTimeout(() => {
-        this.pwdVal = this.pwdVal.replace(".", "");
+        this.password = this.password.replace(".", "");
       }, 0);
     }
   },
