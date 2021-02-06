@@ -2,7 +2,6 @@ import Vue from "vue";
 import Router from "vue-router";
 import Home from "@/views/Home/Home.vue";
 import store from "@/store";
-import User from "@/api/user";
 
 Vue.use(Router);
 
@@ -108,14 +107,18 @@ const router = new Router({
       path: "/BalanceDetails",
       name: "BalanceDetails",
       component: () =>
-        import(/* webpackChunkName: "record" */ "@/views/BalanceDetails/BalanceDetails.vue")
+        import(
+          /* webpackChunkName: "record" */ "@/views/BalanceDetails/BalanceDetails.vue"
+        )
     },
     {
       path: "/Withdrawal",
       name: "Withdrawal",
       component: () =>
-        import(/* webpackChunkName: "record" */ "@/views/Withdrawal/Withdrawal.vue")
-    },    
+        import(
+          /* webpackChunkName: "record" */ "@/views/Withdrawal/Withdrawal.vue"
+        )
+    },
     {
       path: "/Recharge",
       name: "Recharge",
@@ -126,13 +129,17 @@ const router = new Router({
       path: "/WithdrawalPwd",
       name: "WithdrawalPwd",
       component: () =>
-        import(/* webpackChunkName: "my" */ "@/views/WithdrawalPwd/WithdrawalPwd.vue")
+        import(
+          /* webpackChunkName: "my" */ "@/views/WithdrawalPwd/WithdrawalPwd.vue"
+        )
     },
     {
       path: "/WithdrawalSuccess",
       name: "WithdrawalSuccess",
       component: () =>
-        import(/* webpackChunkName: "my" */ "@/views/WithdrawalSuccess/WithdrawalSuccess.vue")
+        import(
+          /* webpackChunkName: "my" */ "@/views/WithdrawalSuccess/WithdrawalSuccess.vue"
+        )
     },
     {
       path: "/my",
@@ -142,144 +149,83 @@ const router = new Router({
     {
       path: "/settings",
       name: "settings",
-      component: () => import(/* webpackChunkName: "my" */ "@/views/Settings/Settings.vue")
+      component: () =>
+        import(/* webpackChunkName: "my" */ "@/views/Settings/Settings.vue")
     },
     {
       path: "/UpdatePwd",
       name: "UpdatePwd",
-      component: () => import(/* webpackChunkName: "my" */ "@/views/UpdatePwd/UpdatePwd.vue")
+      component: () =>
+        import(/* webpackChunkName: "my" */ "@/views/UpdatePwd/UpdatePwd.vue")
     },
     {
       path: "/UpdateNewPwd",
       name: "UpdateNewPwd",
-      component: () => import(/* webpackChunkName: "my" */ "@/views/UpdateNewPwd/UpdateNewPwd.vue")
+      component: () =>
+        import(
+          /* webpackChunkName: "my" */ "@/views/UpdateNewPwd/UpdateNewPwd.vue"
+        )
     },
     {
       path: "/UpdatePayPwd",
       name: "UpdatePayPwd",
-      component: () => import(/* webpackChunkName: "my" */ "@/views/UpdatePayPwd/UpdatePayPwd.vue")
+      component: () =>
+        import(
+          /* webpackChunkName: "my" */ "@/views/UpdatePayPwd/UpdatePayPwd.vue"
+        )
     },
     {
       path: "/UpdateNewPayPwd",
       name: "UpdateNewPayPwd",
-      component: () => import(/* webpackChunkName: "my" */ "@/views/UpdateNewPayPwd/UpdateNewPayPwd.vue")
+      component: () =>
+        import(
+          /* webpackChunkName: "my" */ "@/views/UpdateNewPayPwd/UpdateNewPayPwd.vue"
+        )
     },
     {
       path: "/About",
       name: "About",
-      component: () => import(/* webpackChunkName: "my" */ "@/views/About/About.vue")
+      component: () =>
+        import(/* webpackChunkName: "my" */ "@/views/About/About.vue")
     },
     {
       path: "/Order",
       name: "Order",
-      component: () => import(/* webpackChunkName: "my" */ "@/views/Order/Order.vue")
+      component: () =>
+        import(/* webpackChunkName: "my" */ "@/views/Order/Order.vue")
     },
     {
-      path: "/Comment",
-      name: "Comment",
-      component: () => import(/* webpackChunkName: "my" */ "@/views/Comment/Comment.vue")
+      path: "/Evaluate",
+      name: "Evaluate",
+      component: () =>
+        import(/* webpackChunkName: "my" */ "@/views/Evaluate/Evaluate.vue")
     },
     {
       path: "/PersonMsg",
       name: "PersonMsg",
-      component: () => import(/* webpackChunkName: "my" */ "@/views/PersonMsg/PersonMsg.vue")
+      component: () =>
+        import(/* webpackChunkName: "my" */ "@/views/PersonMsg/PersonMsg.vue")
     },
     {
       path: "/EditMsg",
       name: "EditMsg",
-      component: () => import(/* webpackChunkName: "my" */ "@/views/EditMsg/EditMsg.vue")
+      component: () =>
+        import(/* webpackChunkName: "my" */ "@/views/EditMsg/EditMsg.vue")
     },
     {
       path: "/TimeManage",
       name: "TimeManage",
-      component: () => import(/* webpackChunkName: "my" */ "@/views/TimeManage/TimeManage.vue")
-    },
-    
-    // {
-    //   path: "/RepairSearch",
-    //   name: "RepairSearch",
-    //   component: () =>
-    //     import(
-    //       /* webpackChunkName: "record" */ "@/views/RepairSearch/RepairSearch.vue"
-    //     )
-    // },
-    // {
-    //   path: "/InsureSearch",
-    //   name: "RepairSearch",
-    //   component: () =>
-    //     import(
-    //       /* webpackChunkName: "record" */ "@/views/InsureSearch/InsureSearch.vue"
-    //     )
-    // },
-    // {
-    //   path: "/RepairDetail",
-    //   name: "RepairDetail",
-    //   component: () =>
-    //     import(
-    //       /* webpackChunkName: "record" */ "@/views/RepairDetail/RepairDetail.vue"
-    //     )
-    // },
-    // {
-    //   path: "/InsureDetail",
-    //   name: "InsureDetail",
-    //   component: () =>
-    //     import(
-    //       /* webpackChunkName: "record" */ "@/views/InsureDetail/InsureDetail.vue"
-    //     )
-    // },
-    // {
-    //   path: "/OrderDetail",
-    //   name: "OrderDetail",
-    //   component: () =>
-    //     import(
-    //       /* webpackChunkName: "record" */ "@/views/OrderDetail/OrderDetail.vue"
-    //     )
-    // },
-    // {
-    //   path: "/ChangePhone",
-    //   name: "ChangePhone",
-    //   component: () =>
-    //     import(
-    //       /* webpackChunkName: "my" */ "@/views/ChangePhone/ChangePhone.vue"
-    //     )
-    // },
-    // {
-    //   path: "/PayMent",
-    //   name: "PayMent",
-    //   component: () =>
-    //     import(/* webpackChunkName: "my" */ "@/views/PayMent/PayMent.vue")
-    // },
-    // {
-    //   path: "/Protocol",
-    //   name: "Protocol",
-    //   component: () =>
-    //     import(/* webpackChunkName: "my" */ "@/views/Protocol/Protocol.vue")
-    // },
-    // {
-    //   path: "/PaySuccess",
-    //   name: "PaySuccess",
-    //   component: () =>
-    //     import(/* webpackChunkName: "my" */ "@/views/PaySuccess/PaySuccess.vue")
-    // },
-    // {
-    //   path: "/redbag",
-    //   name: "RedBag",
-    //   component: () =>
-    //     import(/* webpackChunkName: "my" */ "@/views/RedBag/RedBag.vue")
-    // },
-    // {
-    //   path: "/sharecode",
-    //   name: "ShareCode",
-    //   component: () =>
-    //     import(/* webpackChunkName: "my" */ "@/views/ShareCode/ShareCode.vue")
-    // }
+      component: () =>
+        import(/* webpackChunkName: "my" */ "@/views/TimeManage/TimeManage.vue")
+    }
   ]
 });
 router.beforeEach(async (to, from, next) => {
+  console.log(from);
   await store.dispatch("JUDGE_ROUTER_DIRECTION", to.path);
   next();
 });
 
-router.afterEach((to, from) => {});
+router.afterEach(() => {});
 
 export default router;

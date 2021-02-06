@@ -67,9 +67,9 @@
 
           <div class="item-msg">
             <div class="item-msg-l">
-              <van-image :src="require('@/assets/image/pic.jpg')"></van-image>
+              <van-image :src="item.userUrl"></van-image>
               <div class="item-msg-person">
-                <div class="item-name">{{ item.setmealName }}</div>
+                <div class="item-name">{{ item.teaName }}</div>
                 <div class="item-phone">
                   {{ item.telephone }}
                   <van-image
@@ -82,15 +82,19 @@
               <span class="item-unit">$</span> {{ item.money }}
             </div>
           </div>
-          <div class="item-comment">
+          <div
+            class="item-comment"
+            v-for="(childItem, childIndex) in item.evaluateList"
+            :key="childIndex"
+          >
             <div class="item-comment-l">
-              <van-image :src="require('@/assets/image/pic.jpg')"></van-image>
+              <van-image :src="childItem.teaUrl"></van-image>
             </div>
             <div class="item-comment-r">
               <div class="item-comment-top">
                 <div class="item-comment-top-l">
-                  <div class="item-name">{{ item.teaName }}</div>
-                  <div class="item-time">{{ item.createTime }}</div>
+                  <div class="item-name">{{ childItem.teaName }}</div>
+                  <div class="item-time">{{ childItem.createTime }}</div>
                 </div>
                 <div class="item-comment-top-r">
                   <van-image
@@ -99,7 +103,7 @@
                 </div>
               </div>
               <div class="item-comment-con">
-                {{ item.remark }}
+                {{ childItem.remark }}
               </div>
             </div>
           </div>
@@ -135,7 +139,7 @@
                 <div
                   v-if="item.state == 0 || item.state == 5"
                   class="item-bottom-btn btn-color"
-                  @click="onAgain(item.id)"
+                  @click="onAgain(item.teaId)"
                 >
                   再次打赏
                 </div>
@@ -171,10 +175,10 @@
       <van-popup v-model="popShow" round>
         <div class="center-pop">
           <div class="pop-msg">
-            说明：取消订单，系统将收取5%的平台服务费，请知悉！
+            {{ warnTips }}
           </div>
           <div class="bottom-pop-btn">
-            <div class="item-bottom-pop-btn" @click="confirmCancel">
+            <div class="item-bottom-pop-btn" @click="confirm">
               确认取消
             </div>
             <div class="item-bottom-pop-btn" @click="popShow = false">
@@ -188,17 +192,20 @@
 </template>
 <script>
 import Order from "@/api/order";
+import { Toast } from "vant";
 
 export default {
   name: "order",
   data() {
     return {
+      warnTips: "", //说明：取消订单，系统将收取5%的平台服务费，请知悉！    你确定要删除该订单吗？
       list: [],
       current: "",
       pageNo: 1,
       id: "",
       state: "",
-      popShow: false
+      popShow: false,
+      payPop: ""
     };
   },
   computed: {},
@@ -229,12 +236,64 @@ export default {
         return "item-gray";
       }
     },
-    confirmCancel() {},
-    onDelete() {},
-    onAgain() {},
-    onPay() {},
-    onCancel() {},
-    onEvaluate() {},
+    async confirm() {
+      let params = {};
+      if (this.isDelete) {
+        params.id = this.id;
+      } else {
+        params = {
+          id: this.id,
+          state: 4 //	是	String	4：取消订单，2：待确认 ，5：待评价
+        };
+      }
+      if (this.isDelete) {
+        let { code } = await Order.delete(params);
+        if (code == 200) {
+          Toast("删除订单成功");
+          this.stateClick();
+        }
+      } else {
+        let { code } = await Order.update(params);
+        if (code == 200) {
+          Toast("取消订单成功");
+          this.stateClick();
+        }
+      }
+    },
+    async onConfirm(id) {
+      let params = {
+        id: id,
+        state: 5
+      };
+      let { code } = await Order.update(params);
+      if (code == 200) {
+        Toast("确认订单成功");
+        this.stateClick();
+      }
+    },
+    onDelete(id) {
+      this.id = id;
+      this.warnTips = "你确定删除该订单吗？";
+      this.popShow = true;
+    },
+    onAgain(id) {
+      this.$router.push({ path: "/reward", query: { id } });
+    },
+    onPay(id) {
+      this.id = id;
+      this.payPop = true;
+    },
+    onCancel(id) {
+      this.id = id;
+      this.warnTips = "说明：取消订单，系统将收取5%的平台服务费，请知悉！";
+      this.popShow = false;
+    },
+    onEvaluate(id) {
+      let param = {
+        id: id
+      };
+      this.$router.push({ path: "/Evaluate", query: param });
+    },
     stateClick(state) {
       this.state = state;
       this.pageNo = 1;
